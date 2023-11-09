@@ -1,6 +1,9 @@
 ﻿#include "../header/gymmanagementsystem.h"
 #include <stdexcept>
 
+#include <fstream>
+#include <list>
+
 #include <iostream>
 #include <vector>
 #include <string>
@@ -252,7 +255,7 @@ public:
                 std::getline(ss, name, ',');
                 std::getline(ss, surname, ',');
                 std::getline(ss, contact, ',');
-                std::cout << "Name: " << name << ", Contact: " << contact << std::endl;
+                std::cout << "\nName: " << name << ", \nSurname:"<< surname << ", \nContact: " << contact << std::endl;
             }
             file.close();
 
@@ -326,4 +329,5 @@ private:
     std::vector<Member> members;
     std::unordered_map<std::string, Member> memberHashMap; // Üyeleri adlarına göre saklamak için bir hash tablosu
 };
+
 

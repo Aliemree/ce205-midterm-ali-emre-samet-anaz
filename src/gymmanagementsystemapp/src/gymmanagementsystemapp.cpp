@@ -28,6 +28,7 @@ int main() {
     std::stack<int> stackData;
     std::queue<int> queueData;
     while (true) {
+
         PrintCentered("Gym Management System Menu");
         PrintCentered("1. Member Management");
         PrintCentered("2. Schedule");
