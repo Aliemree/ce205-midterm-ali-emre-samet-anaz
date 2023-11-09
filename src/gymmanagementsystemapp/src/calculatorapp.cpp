@@ -1,6 +1,6 @@
 /**
- * @file calculatorapp.cpp
- * @brief A simple program to demonstrate the usage of the calculator model class.
+ * @file gymmanagementsystemapp.cpp
+ * @brief A simple program to demonstrate the usage of the gymmanagementsystem model class.
  *
  * This program process infix notations and calculate operations
  *
@@ -12,9 +12,9 @@
 #include <string>
 #include <sstream>
 #include <stdexcept>
-#include "../../calculator/header/calculator.h"  // Adjust this include path based on your project structure
+#include "../../gymmanagementsystem/header/gymmanagementsystem.h"  // Adjust this include path based on your project structure
 
-using namespace Coruh::Calculator;
+using namespace Coruh::GymManagementSystem;
 
 bool isOperator(char c) {
     return (c == '+' || c == '-' || c == '*' || c == '/');
@@ -71,14 +71,14 @@ double evaluatePostfix(const std::string& postfix) {
             double result;
 
             switch(token[0]) {
-                case '+': result = Calculator::add(a, b); break;
-                case '-': result = Calculator::subtract(a, b); break;
-                case '*': result = Calculator::multiply(a, b); break;
+                case '+': result = GymManagementSystem::add(a, b); break;
+                case '-': result = GymManagementSystem::subtract(a, b); break;
+                case '*': result = GymManagementSystem::multiply(a, b); break;
                 case '/': 
                     if (b == 0) {
                         throw std::invalid_argument("Division by zero is not allowed.");
                     }
-                    result = Calculator::divide(a, b); break;
+                    result = GymManagementSystem::divide(a, b); break;
             }
 
             s.push(result);

@@ -18,8 +18,8 @@
  */
 
  /**
- * @namespace Coruh::Calculator
- * @brief Namespace for calculator functions and classes.
+ * @namespace Coruh::GymManagementSystem
+ * @brief Namespace for gymmanagementsystem functions and classes.
  *
- * This namespace contains a collection of calculator functions and classes that provide commonly-used functionality.
+ * This namespace contains a collection of gymmanagementsystem functions and classes that provide commonly-used functionality.
  */

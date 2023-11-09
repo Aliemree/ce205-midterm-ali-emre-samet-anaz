@@ -1,23 +1,23 @@
 /**
- * @file calculator.h
+ * @file gymmanagementsystem.h
  * 
  * @brief Provides functions for math. utilities
  */
 
-#ifndef CALCULATOR_H
-#define CALCULATOR_H
+#ifndef GYMMANAGEMENTSYSTEM_H
+#define GYMMANAGEMENTSYSTEM_H
 
 #include "../../utility/header/commonTypes.h"
 
 namespace Coruh
 {
-    namespace Calculator
+    namespace GymManagementSystem
     {
         /**
-            @class Calculator
+            @class GymManagementSystem
             @brief Provides Basic functions for various operations.
         */
-        class Calculator
+        class GymManagementSystem
         {
         public:
             /**
@@ -59,4 +59,4 @@ namespace Coruh
     }
 }
 
-#endif // CALCULATOR_H
+#endif // GYMMANAGEMENTSYSTEM_H
