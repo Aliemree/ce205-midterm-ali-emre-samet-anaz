@@ -46,7 +46,7 @@ public:
     }
 
     void removeMember() {
-        std::string filename = "C:\\Users\\aliem\\Desktop\\members.txt"; // Dosya yolunu belirt
+        std::string filename = "members.txt"; // Dosya yolunu belirt
         std::ifstream file(filename);
 
         if (file.is_open()) {
@@ -160,7 +160,7 @@ public:
 
 
     void updateMembertoFile() {
-        std::string filename = "C:\\Users\\aliem\\Desktop\\members.txt"; // Dosya yolunu belirt
+        std::string filename = "members.txt"; // Dosya yolunu belirt
         std::ifstream file(filename);
 
         if (file.is_open()) {
@@ -243,7 +243,7 @@ public:
         }
     }
     void listMembers() {
-        std::string filename = "C:\\Users\\aliem\\Desktop\\members.txt"; // Dosya yolunu belirt
+        std::string filename = "members.txt"; // Dosya yolunu belirt
         std::ifstream file(filename);
 
         if (file.is_open()) {
@@ -268,7 +268,7 @@ public:
     }
 
     void saveMembersToFile() {
-        std::string filename = "C:\\Users\\aliem\\Desktop\\members.txt"; // Dosya yolunu değiştirdik
+        std::string filename = "members.txt"; // Dosya yolunu değiştirdik
         std::ofstream file(filename);
 
         if (file.is_open()) {
@@ -284,7 +284,7 @@ public:
     }
 
     void loadMembersFromFile() {
-        std::string filename = "C:\\Users\\aliem\\Desktop\\members.txt"; // Dosya yolunu belirt
+        std::string filename = "members.txt"; // Dosya yolunu belirt
         std::ifstream file(filename);
 
         if (file.is_open()) {
