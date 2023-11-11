@@ -22,6 +22,11 @@ void PrintCentered(const std::string& text) {
 }
 
 int main() {
+
+    EquipmentUsageLogger usageLogger;
+    usageLogger.loadFromFile();
+    MaintenanceScheduler scheduler;
+
     /*SchedulingManager schedulingManager;*/
     GymManager gym;
     std::vector<std::vector<int>> sparseMatrix;
@@ -114,25 +119,24 @@ int main() {
 
                 int subsubChoice;
                 std::cin >> subsubChoice;
-                system("cls");
+               
                 switch (subsubChoice) {
                 case 1:
+                   
                     system("cls");
                     break;
                 case 2:
-                    system("cls");
-                    // Güncelleme işlevini ekleyebilirsiniz.
+               
                     break;
                 case 3:
-                    // Silme işlevini ekleyebilirsiniz.
-                    system("cls");
+                   
                     break;
                 case 4:
-                    // Geri bildirim toplama işlevini ekleyebilirsiniz.
-                    system("cls");
+                    
                     break;
                 case 5:
-                    system("cls");
+                   
+                   
                     break;
                 default:
                     std::cout << "Invalid choice. Please try again." << std::endl;
@@ -164,18 +168,45 @@ int main() {
                 system("cls");
                 switch (subChoice) {
                 case 1:
-                    system("cls");
+
+               
+                    usageLogger.loadFromFile();
+                    usageLogger.getUserInputForMultipleEquipments();
+                    usageLogger.performDataStructureOperations();
+                    usageLogger.calculateUsageFromLogs();
+                   
+                  
+                    std::cout << "Displaying Usage Logs Once:" << std::endl;
+                    usageLogger.displayUsageLogs(); // Tek seferde kullanım günlüklerini listele
+                    usageLogger.displayEquipmentUsageCount();
+                    std::cout << "Press Enter to exit...";
+                    std::cin.get(); 
                     break;
                 case 2:
-                    // Güncelleme işlevini ekleyebilirsiniz.
-                    system("cls");
+                   
+                    // Bakım planı oluşturma
+                    scheduler.scheduleMaintenance("Treadmill", "2023-12-15");
+                    scheduler.scheduleMaintenance("Dumbbells", "2023-12-20");
+
+                    // Bakım kaydı ekleme
+                    scheduler.addMaintenanceRecord("Treadmill", "2023-12-15");
+                    scheduler.addMaintenanceRecord("Dumbbells", "2023-12-19");
+
+                    // Bakım durumunu kontrol etme
+                    scheduler.checkMaintenanceStatus("Treadmill", "2023-12-16");
+                    scheduler.checkMaintenanceStatus("Dumbbells", "2023-12-21");
+
+                    // Bakım planını görüntüleme
+                    scheduler.displayMaintenanceSchedule();
+
+                   
                     break;
                 case 3:
-                    // Silme işlevini ekleyebilirsiniz.
-                    system("cls");
+                             system("cls");
                     break;
                 case 4:
-                    // Geri bildirim toplama işlevini ekleyebilirsiniz.
+                   
+
                     system("cls");
                     break;
                 case 5:
@@ -245,14 +276,7 @@ int main() {
             std::cout << "Invalid choice. Please try again." << std::endl;
         }
     }
-    //// Verileri dosyaya yaz
-    //writeProgramToFile(schedulingManager.workoutPrograms, "WorkOutProgram.txt");
-
-    //// Dosyadan verileri oku
-    //schedulingManager.workoutPrograms = readProgramsFromFile("WorkOutProgram.txt");
-
-    //// Ekrana yazdır
-    //schedulingManager.displayWorkoutPrograms();
+    
 
 
     //return 0;

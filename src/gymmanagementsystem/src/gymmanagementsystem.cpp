@@ -322,12 +322,243 @@ public:
         addMember(newMember);
     }
 
-
-    // Diğer işlevleri eklemek için aynı şekilde tanımlayabilirsiniz.
-
 private:
     std::vector<Member> members;
     std::unordered_map<std::string, Member> memberHashMap; // Üyeleri adlarına göre saklamak için bir hash tablosu
 };
+
+class Equipment {
+public:
+    Equipment() : name(""), lastMaintenance(""), usageLogs(0) {}
+
+    Equipment(const std::string& name, const std::string& lastMaintenance, int usageLogs)
+        : name(name), lastMaintenance(lastMaintenance), usageLogs(usageLogs) {}
+
+    std::string getName() const {
+        return name;
+    }
+
+    std::string getLastMaintenance() const {
+        return lastMaintenance;
+    }
+
+    int getUsageLogs() const {
+        return usageLogs;
+    }
+
+private:
+    std::string name;
+    std::string lastMaintenance;
+    int usageLogs;
+};
+
+class EquipmentManager {
+public:
+    void addEquipment(const Equipment& equipment) {
+        equipments.push_back(equipment);
+        equipmentHashMap[equipment.getName()] = equipment;
+    }
+
+    void displayEquipment() {
+        std::cout << "Gym Equipment:" << std::endl;
+        for (const Equipment& equipment : equipments) {
+            std::cout << "Name: " << equipment.getName() << ", Last Maintenance: " << equipment.getLastMaintenance() << ", Usage Logs: " << equipment.getUsageLogs() << std::endl;
+        }
+    }
+
+    void listEquipment() {
+        std::string filename = "equipment.txt";
+        std::ifstream file(filename);
+
+        if (file.is_open()) {
+            std::string line;
+            std::cout << "Equipment from file:" << std::endl;
+            while (std::getline(file, line)) {
+                std::istringstream ss(line);
+                std::string name, lastMaintenance;
+                int usageLogs;
+                ss >> name >> lastMaintenance >> usageLogs;
+                Equipment equipment(name, lastMaintenance, usageLogs);
+                std::cout << "Name: " << equipment.getName() << ", Last Maintenance: " << equipment.getLastMaintenance() << ", Usage Logs: " << equipment.getUsageLogs() << std::endl;
+            }
+            file.close();
+        }
+        else {
+            std::cout << "Failed to open the file for reading." << std::endl;
+        }
+    }
+
+    // Other methods for updating, removing, saving, loading equipment data
+
+private:
+    std::vector<Equipment> equipments;
+    std::unordered_map<std::string, Equipment> equipmentHashMap;
+};
+class EquipmentUsageLogger {
+public:
+    void logUsage(const std::string& equipmentName, const std::string& user, const std::string& purpose) {
+        usageLog.push_back("Equipment: " + equipmentName + " used by " + user + " for " + purpose);
+        usageMap[equipmentName]++;
+        saveToFile();  // Her yeni kullanımı dosyaya kaydet
+    }
+
+    void displayUsageLogs() {
+        std::cout << "Usage Logs:" << std::endl;
+        for (const auto& log : usageLog) {
+            std::cout << log << std::endl;
+        }
+    }
+
+    void displayEquipmentUsageCount() {
+        std::cout << "Equipment Usage Counts:" << std::endl;
+        for (const auto& pair : usageMap) {
+            std::cout << pair.first << " used " << pair.second << " times." << std::endl;
+        }
+    }
+
+    void getUserInputAndLogUsage() {
+        std::string equipmentName, user, purpose;
+        std::cout << "Enter equipment name: ";
+        std::getline(std::cin >> std::ws, equipmentName);
+
+        std::cout << "Enter user name: ";
+        std::getline(std::cin >> std::ws, user);
+
+        std::cout << "Enter purpose of use: ";
+        std::getline(std::cin >> std::ws, purpose);
+
+        logUsage(equipmentName, user, purpose);
+    }
+
+    void getUserInputForMultipleEquipments() {
+        int numEquipments;
+        std::cout << "Enter the number of equipments: ";
+        std::cin >> numEquipments;
+        std::cin.ignore();  // Clear input buffer
+
+        for (int i = 0; i < numEquipments; ++i) {
+            std::cout << "Enter details for equipment " << i + 1 << ":" << std::endl;
+            getUserInputAndLogUsage();
+        }
+    }
+
+    void loadFromFile() {
+        std::ifstream file("usage_logs.txt");
+        if (file.is_open()) {
+            std::string line;
+            while (std::getline(file, line)) {
+                usageLog.push_back(line);
+                updateEquipmentUsageCount(line); // Her girdide ekipman kullanım sayısını güncelle
+            }
+            file.close();
+        }
+    }
+
+    void saveToFile() {
+        std::ofstream file("usage_logs.txt");
+        if (file.is_open()) {
+            for (const auto& log : usageLog) {
+                file << log << "\n";
+            }
+            file.close();
+        }
+        else {
+            std::cout << "Unable to save to file." << std::endl;
+        }
+    }
+
+    void calculateUsageFromLogs() {
+        std::ifstream file("usage_logs.txt");
+        if (file.is_open()) {
+            std::string line;
+            while (std::getline(file, line)) {
+                usageLog.push_back(line);
+                updateEquipmentUsageCount(line); // Her girdide ekipman kullanım sayısını güncelle
+            }
+            file.close();
+        }
+    }
+
+    void updateEquipmentUsageCount(const std::string& log) {
+        std::istringstream ss(log);
+        std::string equipmentName, user, purpose;
+        ss >> equipmentName >> user >> purpose;
+        usageMap[equipmentName]++;
+    }
+
+    // Yeni eklenen işlevler
+    void performDataStructureOperations() {
+        std::cout << "Performing operations on various data structures and algorithms:" << std::endl;
+        // Örnek olarak bir Double Linked List ve Stack kullanılıyor:
+        performDoubleLinkedListOperations();
+        performStackOperations();
+    }
+
+    void performDoubleLinkedListOperations() {
+        std::list<std::string> doubleLinkedList;
+        doubleLinkedList.push_back("Item 1");
+
+        std::cout << "Double Linked List operations performed." << std::endl;
+        for (const auto& item : doubleLinkedList) {
+            std::cout << "Item: " << item << std::endl;
+        }
+    }
+
+    void performStackOperations() {
+        std::stack<std::string> stackData;
+        stackData.push("Data 1");
+
+        std::cout << "Stack operations performed." << std::endl;
+        while (!stackData.empty()) {
+            std::cout << "Stack Top: " << stackData.top() << std::endl;
+            stackData.pop();
+        }
+    }
+
+
+private:
+    std::vector<std::string> usageLog;
+    std::unordered_map<std::string, int> usageMap;
+};
+
+class MaintenanceScheduler {
+public:
+    void scheduleMaintenance(const std::string& equipmentName, const std::string& maintenanceDate) {
+        maintenanceSchedule[equipmentName] = maintenanceDate;
+        std::cout << "Maintenance scheduled for " << equipmentName << " on " << maintenanceDate << std::endl;
+    }
+
+    void addMaintenanceRecord(const std::string& equipmentName, const std::string& maintenanceDate) {
+        maintenanceRecords[equipmentName] = maintenanceDate;
+        std::cout << "Maintenance record added for " << equipmentName << " on " << maintenanceDate << std::endl;
+    }
+
+    void checkMaintenanceStatus(const std::string& equipmentName, const std::string& currentDate) {
+        if (maintenanceSchedule.find(equipmentName) != maintenanceSchedule.end()) {
+            if (currentDate > maintenanceSchedule[equipmentName]) {
+                std::cout << equipmentName << " is due for maintenance!" << std::endl;
+            }
+            else {
+                std::cout << equipmentName << " is up to date with maintenance." << std::endl;
+            }
+        }
+        else {
+            std::cout << "No maintenance schedule found for " << equipmentName << std::endl;
+        }
+    }
+
+    void displayMaintenanceSchedule() {
+        std::cout << "Maintenance Schedule:" << std::endl;
+        for (const auto& record : maintenanceSchedule) {
+            std::cout << record.first << " - " << record.second << std::endl;
+        }
+    }
+
+private:
+    std::unordered_map<std::string, std::string> maintenanceSchedule;
+    std::unordered_map<std::string, std::string> maintenanceRecords;
+};
+
+
 
 
