@@ -585,7 +585,7 @@ public:
     Purchase() {
         loadPriceList();
     }
-
+      
     void displayPurchaseOptions() {
         std::cout << "\n\n\t\tPAYMENT METHODS AND DISCOUNTS\n\n";
         for (const auto& entry : priceList) {
@@ -607,6 +607,7 @@ public:
 
 private:
     std::unordered_map<char, std::pair<std::string, int>> priceList;
+    std::vector<std::string> usageLog;
 
     void loadPriceList() {
         priceList['A'] = { "Fitness / Normal Membership : 1 Month (5 days a week)", 20 };
@@ -620,6 +621,7 @@ private:
         priceList['I'] = { "Fitness and Swimming / Student Discount : 1 Month (3 days a week)", 20 };
     }
 };
+
 
 
 

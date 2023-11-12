@@ -27,6 +27,7 @@ int main() {
     usageLogger.loadFromFile();
     MaintenanceScheduler scheduler;
     Purchase purchaseSystem;
+  
    
 
     /*SchedulingManager schedulingManager;*/
@@ -161,7 +162,7 @@ int main() {
                 PrintCentered("1. Usage Logs");
                 PrintCentered("2. Maintenance Schedules ");
                 PrintCentered("3. Purchase");
-                PrintCentered("4. Replacement Planning");
+                PrintCentered("4. Rules And Regulayions");
                 PrintCentered("5. Back to Main Menu");
 
 
@@ -213,7 +214,7 @@ int main() {
                     scheduler.checkMaintenanceStatus("Treadmill", "2023-11-16");
                     scheduler.checkMaintenanceStatus("Mountain bike", "2023-11-15");
                     scheduler.checkMaintenanceStatus("Punching ball", "2023 - 11 - 14");
-                                                     
+                    main();
                     break;
                    
                 case 3:
@@ -228,17 +229,24 @@ int main() {
                     }
                     else {
                         std::cout << "Purchase failed. Please try again." << std::endl;
-                    }
-
-
-                    return 0;
-
+                    } 
+                     break;
                     
-                    break;
+                    main();
                 case 4:
                    
-
-                    system("cls");
+                    PrintCentered("  Rules And Regulayions ");
+                    PrintCentered("\n\t1.Do not bring your gym bag or other personal belongings onto the fitness floor.\n");
+                    PrintCentered("\t2.Refrain from yelling, using profanity, banging weights and making loud sounds\n");
+                    PrintCentered("\t3.Do not sit on machines between sets\n");
+                    PrintCentered("\t4.Re-rack weights and return all other equipment and accessories to their proper locations\n");
+                    PrintCentered("\t5.Ask staff to show you how to operate equipment properly so that others are not waiting as you figure it out.\n");
+                    PrintCentered("\t6.Wipe down all equipment after use.\n");
+                    PrintCentered("\t7.Stick to posted time limits on all cardiovascular machines.\n");
+                    PrintCentered("\t8.Do not bring children onto the gym floor. Children must remain in the childcare area.\n");
+                    PrintCentered("\t9.Do not disturb others. Focus on your own workout and allow others to do the same.\n");
+                    PrintCentered("\t10.Before beginning your workout, wash your hands and wipe off any cologne or perfume.\n\n");
+                                              
                     break;
                 case 5:
                     system("cls");
@@ -272,6 +280,7 @@ int main() {
                 system("cls");
                 switch (subChoice) {
                 case 1:
+
                     system("cls");
                     break;
                 case 2:
