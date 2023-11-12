@@ -256,7 +256,7 @@ public:
                 std::getline(ss, name, ',');
                 std::getline(ss, surname, ',');
                 std::getline(ss, contact, ',');
-                std::cout << "\nName: " << name << ", \nSurname:"<< surname << ", \nContact: " << contact << std::endl;
+                std::cout << "\nName: " << name << ", \nSurname:" << surname << ", \nContact: " << contact << std::endl;
             }
             file.close();
 
@@ -585,7 +585,7 @@ public:
     Purchase() {
         loadPriceList();
     }
-      
+
     void displayPurchaseOptions() {
         std::cout << "\n\n\t\tPAYMENT METHODS AND DISCOUNTS\n\n";
         for (const auto& entry : priceList) {
@@ -621,6 +621,8 @@ private:
         priceList['I'] = { "Fitness and Swimming / Student Discount : 1 Month (3 days a week)", 20 };
     }
 };
+
+
 
 
 

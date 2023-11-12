@@ -6,7 +6,7 @@
 #include <queue>
 #include <fstream>
 #include <sstream>
-#include "C:\Users\aliem\Desktop\ce205-midterm-ali-emre-samet-anaz\src\gymmanagementsystem\src\gymmanagementsystem.cpp"
+#include "C:\Users\samet\OneDrive\Masaüstü\data_structures_hw_1\ce205-midterm-ali-emre-samet-anaz\src\gymmanagementsystem\src\gymmanagementsystem.cpp"
 
 
 
@@ -27,8 +27,8 @@ int main() {
     usageLogger.loadFromFile();
     MaintenanceScheduler scheduler;
     Purchase purchaseSystem;
-  
-   
+
+
 
     /*SchedulingManager schedulingManager;*/
     GymManager gym;
@@ -122,25 +122,138 @@ int main() {
 
                 int subsubChoice;
                 std::cin >> subsubChoice;
-               
+
                 switch (subsubChoice) {
                 case 1:
-                   
-                    system("cls");
-                    break;
-                case 2:
-               
-                    break;
-                case 3:
-                   
-                    break;
-                case 4:
-                    
-                    break;
-                case 5:
-                   
-                   
-                    break;
+                    while (true) {
+                        PrintCentered("  Workout Programs ");
+                        PrintCentered("1. CHEST WORKOUT");
+                        PrintCentered("2.  BACK WORKOUT ");
+                        PrintCentered("3. BICEPS WORKOUT");
+                        PrintCentered("4. TRICEPS WORKOUT");
+                        PrintCentered("5. ABS WORKOUT");
+                        PrintCentered("6. SHOULDER WORKOUT");
+                        PrintCentered("7. LEGS ");
+                        PrintCentered("8. BACK TO MAIN MENU");
+
+
+
+
+                        int sub1Choice;
+                        std::cin >> sub1Choice;
+
+
+                        switch (sub1Choice) {
+                        case 1:
+                            std::cout << "\n\n\n\n";
+                            std::cout << "\t PUSH UP:                 3 SETS;       15,12,10 REPS\n\n";
+                            std::cout << "\t INCLINED BENCH-PRESS:    3 SETS;       15,12,10 REPS\n\n";
+                            std::cout << "\t FLAT BENCH-PRESS:        3 SETS;       15,12,10 REPS\n\n";
+                            std::cout << "\t DECLINED BENCH-PRESS:    3 SETS;       15,12,10 REPS\n\n";
+                            std::cout << "\t INCLINE DUMBBELL-PRESS:  3 SETS;       15,12,10 REPS\n\n";
+                            std::cout << "\t FLAT DUMBBELL-PRESS:      3 SETS;       15,12,10 REPS\n\n";
+                            std::cout << "\t DECLINED DUMBBELL-PRESS:  3 SETS;       15,12,10 REPS\n\n";
+                            std::cout << "\t CABLE CROSS:             3 SETS;       15,12,10 REPS\n\n";
+                            std::cout << "\t SEATED MACHINE FLY:      3 SETS;       15,12,10 REPS\n\n";
+                            std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n\n\n\n";
+
+
+
+                            break;
+                        case 2:
+
+                            std::cout << "\n\n\n\n";
+                            std::cout << "\t WIDE GRIP PULL-UP:       3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t LAT PULL DOWN BACK:      3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t T-BAR:                   3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t SEATED RAW:              3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t PULL DOWN ROW:           3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t ONR ARM DUMBBELL ROWS:   3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t BARBELL BENT OVER:       3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t DEAD LIFT:               3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n\n";
+                            // Durum 2break;
+                            break;
+                        case 3:
+
+                            std::cout << "\n\n\n\n";
+                            std::cout << "\t SMALL GRIP PULL-UP:       3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t PREACHER CURLS:           3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t BARBELL CURLS:            3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t ONE BY ONE DUMBELL CURL:  3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t CONCENTRATION CURLS:      3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t CABLE BICEPS CURLS:       3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t INCLINED DUMBELL CURLS:   3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t REVERSE CURLS:            3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t HAMMER CURLS:             3 SETS;        15,12,10 REPS\n\n";
+                            std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n\n";
+                            // Durum 3
+                            break;
+                        case 4:
+
+
+                            std::cout << "\n\n\n\n";
+                            std::cout << "\t DIAMOND PUSH-UP:               3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t FLAT BAR TRICEPS EXTENSION:    3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t BAR TRICEPS EXTENSION:         3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t ONE ARM DUMBELL PRESS:         3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t BOTH ARM DUMBELL PRESS:        3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t KICKBACK:                      3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t CABLE PUSH DOWN:               3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t CABLE PUSH OVERHEAD:           3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t TRICEPS DIPS:                  3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n\n";
+                            // Durum 4
+                            break;
+                        case 5:
+
+
+                            std::cout << "\n\n\n\n";
+                            std::cout << "\t HANGING LEG RAISE:                             3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t MACHINE CRUNCH:                                3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t CABLE PALLOF PRESS:                            3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t KNEELING CABLE CRUNCH:                         3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t DECLINE-BENCH CRUNCH WITH MEDICINE BALL:       3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t EXERCISE BALL PIKE:                            3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t PLANK:                                         7,5,3 MINUTES\n\n";
+                            std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n\n";
+                            // Durum 5
+                            break;
+                        case 6:
+                            std::cout << "\n\n\n\n";
+                            std::cout << "\t BAREBELL FRONT PRESS:           3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t DUMBELL PRESS:                  3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t LATERAL RAISES:                 3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t FRONT PRESS:                    3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t DUMBELL BENT OVER:              3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t UPRIGHT ROW:                    3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t SHRUG:                          3 SETS;     15,12,10 REPS\n\n";
+                            std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n";
+                            // Durum 6
+                            break;
+                        case 7:
+                            std::cout << "\n\n";
+                            std::cout << "\t SET-UPS:                      3 SETS;      15,12,10 REPS\n\n";
+                            std::cout << "\t SUMO DUMBELL SQUATS:          3 SETS;      15,12,10 REPS\n\n";
+                            std::cout << "\t LUNGES DUMBELLS:              3 SETS;      15,12,10 REPS\n\n";
+                            std::cout << "\t SEATED LEGS CRULS:            3 SETS;      15,12,10 REPS\n\n";
+                            std::cout << "\t SEATED MACHINE EXTENSIONS:    3 SETS;      15,12,10 REPS\n\n";
+                            std::cout << "\t STANDING DUMBELL CALF:        3 SETS;      15,12,10 REPS\n\n";
+                            std::cout << "\t REVERSE LEGS CRULS:           3 SETS;      15,12,10 REPS\n\n";
+                            std::cout << "\t HEAVY LEG PRESS:              3 SETS;      15,12,10 REPS\n\n";
+                            std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n";
+                            // Durum 7
+                            break;
+                        case 8:
+                            system("cls");
+                            main();
+                            break;
+                        default:
+                            std::cout << "Invalid choice. Please try again." << std::endl;
+                            break;
+                        }
+                    }
+
                 default:
                     std::cout << "Invalid choice. Please try again." << std::endl;
                 }
@@ -171,34 +284,34 @@ int main() {
                 system("cls");
                 switch (subChoice) {
                 case 1:
-                  
-                
-                        PrintCentered("  Equipment List ");
-                        PrintCentered("1. Mountain bike");
-                        PrintCentered("2. Elliptical training ");
-                        PrintCentered("3. Railway Power ");
-                        PrintCentered("4. Dumbbell");
-                        PrintCentered("5. Shuttle Stand");
-                        PrintCentered("6. Punching ball");
-                        PrintCentered("7. Back to Main Menu");
-
-                        usageLogger.loadFromFile();
-                        usageLogger.getUserInputForMultipleEquipments();
-                        usageLogger.performDataStructureOperations();
-                        usageLogger.calculateUsageFromLogs();
 
 
-                        std::cout << "Displaying Usage Logs Once:" << std::endl;
-                        usageLogger.displayUsageLogs(); // Tek seferde kullanım günlüklerini listele
-                        usageLogger.displayEquipmentUsageCount();
-                        std::cout << "Press Enter to exit...";
-                        std::cin.get();
-                
-                        system("cls");
-                        break;
-                    
+                    PrintCentered("  Equipment List ");
+                    PrintCentered("1. Mountain bike");
+                    PrintCentered("2. Elliptical training ");
+                    PrintCentered("3. Railway Power ");
+                    PrintCentered("4. Dumbbell");
+                    PrintCentered("5. Shuttle Stand");
+                    PrintCentered("6. Punching ball");
+                    PrintCentered("7. Back to Main Menu");
+
+                    usageLogger.loadFromFile();
+                    usageLogger.getUserInputForMultipleEquipments();
+                    usageLogger.performDataStructureOperations();
+                    usageLogger.calculateUsageFromLogs();
+
+
+                    std::cout << "Displaying Usage Logs Once:" << std::endl;
+                    usageLogger.displayUsageLogs(); // Tek seferde kullanım günlüklerini listele
+                    usageLogger.displayEquipmentUsageCount();
+                    std::cout << "Press Enter to exit...";
+                    std::cin.get();
+
+                    system("cls");
+                    break;
+
                 case 2:
-                   
+
                     // Bakım planı oluşturma
                     scheduler.scheduleMaintenance("Treadmill", "2023-11-15");
                     scheduler.scheduleMaintenance("Dumbbells", "2023-11-20");
@@ -216,10 +329,10 @@ int main() {
                     scheduler.checkMaintenanceStatus("Punching ball", "2023 - 11 - 14");
                     main();
                     break;
-                   
+
                 case 3:
 
-                    purchaseSystem.displayPurchaseOptions(); 
+                    purchaseSystem.displayPurchaseOptions();
                     char option;
                     std::cout << "Select an option to buy (A to I): ";
                     std::cin >> option;
@@ -229,12 +342,12 @@ int main() {
                     }
                     else {
                         std::cout << "Purchase failed. Please try again." << std::endl;
-                    } 
-                     break;
-                    
+                    }
+                    break;
+
                     main();
                 case 4:
-                   
+
                     PrintCentered("  Rules And Regulayions ");
                     PrintCentered("\n\t1.Do not bring your gym bag or other personal belongings onto the fitness floor.\n");
                     PrintCentered("\t2.Refrain from yelling, using profanity, banging weights and making loud sounds\n");
@@ -246,7 +359,7 @@ int main() {
                     PrintCentered("\t8.Do not bring children onto the gym floor. Children must remain in the childcare area.\n");
                     PrintCentered("\t9.Do not disturb others. Focus on your own workout and allow others to do the same.\n");
                     PrintCentered("\t10.Before beginning your workout, wash your hands and wipe off any cologne or perfume.\n\n");
-                                              
+
                     break;
                 case 5:
                     system("cls");
@@ -260,7 +373,7 @@ int main() {
                     break;
                 }
             }
-            
+
             break;
 
         }
@@ -312,15 +425,15 @@ int main() {
         case 5:
             return 0;
 
-       
+
         default:
             std::cout << "Invalid choice. Please try again." << std::endl;
-           
+
         }
 
-        
+
     }
-    
+
 
 
     //return 0;
