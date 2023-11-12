@@ -14,6 +14,7 @@
 #include <sstream>
 
 
+
 class Member {
 public:
     Member() : name(""), surname(""), contact("") {}
@@ -418,7 +419,7 @@ public:
 
     void getUserInputAndLogUsage() {
         std::string equipmentName, user, purpose;
-        std::cout << "Enter equipment name: ";
+        std::cout << "Enter equipment Number: ";
         std::getline(std::cin >> std::ws, equipmentName);
 
         std::cout << "Enter user name: ";
@@ -432,7 +433,7 @@ public:
 
     void getUserInputForMultipleEquipments() {
         int numEquipments;
-        std::cout << "Enter the number of equipments: ";
+        std::cout << "How much equipment did you use: ";
         std::cin >> numEquipments;
         std::cin.ignore();  // Clear input buffer
 
@@ -523,9 +524,28 @@ private:
 
 class MaintenanceScheduler {
 public:
+public:
     void scheduleMaintenance(const std::string& equipmentName, const std::string& maintenanceDate) {
         maintenanceSchedule[equipmentName] = maintenanceDate;
         std::cout << "Maintenance scheduled for " << equipmentName << " on " << maintenanceDate << std::endl;
+    }
+
+    void performMaintenance() {
+        std::stack<std::string> maintenanceStack;
+
+        for (const auto& schedule : maintenanceSchedule) {
+            maintenanceStack.push(schedule.first);
+        }
+
+        while (!maintenanceStack.empty()) {
+            std::string equipment = maintenanceStack.top();
+            maintenanceStack.pop();
+
+            std::cout << "Performing maintenance for " << equipment << std::endl;
+            // Perform maintenance operations here
+
+            std::cout << "Maintenance completed for " << equipment << std::endl;
+        }
     }
 
     void addMaintenanceRecord(const std::string& equipmentName, const std::string& maintenanceDate) {
@@ -557,7 +577,50 @@ public:
 private:
     std::unordered_map<std::string, std::string> maintenanceSchedule;
     std::unordered_map<std::string, std::string> maintenanceRecords;
+
 };
+
+class Purchase {
+public:
+    Purchase() {
+        loadPriceList();
+    }
+
+    void displayPurchaseOptions() {
+        std::cout << "\n\n\t\tPAYMENT METHODS AND DISCOUNTS\n\n";
+        for (const auto& entry : priceList) {
+            std::cout << "\n\t" << entry.first << "- " << entry.second.first << " : " << entry.second.second << "$";
+        }
+        std::cout << std::endl;
+    }
+
+    bool buyItem(char option) {
+        if (priceList.find(option) != priceList.end()) {
+            std::cout << "You've purchased " << priceList[option].first << " for " << priceList[option].second << "$." << std::endl;
+            return true;
+        }
+        else {
+            std::cout << "Invalid option! Please select a valid item." << std::endl;
+            return false;
+        }
+    }
+
+private:
+    std::unordered_map<char, std::pair<std::string, int>> priceList;
+
+    void loadPriceList() {
+        priceList['A'] = { "Fitness / Normal Membership : 1 Month (5 days a week)", 20 };
+        priceList['B'] = { "Fitness / Normal Membership : 1 Month (3 days a week)", 15 };
+        priceList['C'] = { "Fitness / Student Discount : 1 Month (3 days a week)", 10 };
+        priceList['D'] = { "Swimming / Normal Membership : 1 Month (5 days a week)", 25 };
+        priceList['E'] = { "Swimming / Normal Membership : 1 Month (3 days a week)", 20 };
+        priceList['F'] = { "Swimming / Student Discount : 1 Month (3 days a week)", 15 };
+        priceList['G'] = { "Fitness and Swimming / Normal Membership : 1 Month (5 days a week)", 40 };
+        priceList['H'] = { "Fitness and Swimming / Normal Membership : 1 Month (3 days a week)", 30 };
+        priceList['I'] = { "Fitness and Swimming / Student Discount : 1 Month (3 days a week)", 20 };
+    }
+};
+
 
 
 

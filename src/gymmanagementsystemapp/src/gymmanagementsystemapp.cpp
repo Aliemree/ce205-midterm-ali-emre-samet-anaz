@@ -26,6 +26,8 @@ int main() {
     EquipmentUsageLogger usageLogger;
     usageLogger.loadFromFile();
     MaintenanceScheduler scheduler;
+    Purchase purchaseSystem;
+   
 
     /*SchedulingManager schedulingManager;*/
     GymManager gym;
@@ -168,41 +170,70 @@ int main() {
                 system("cls");
                 switch (subChoice) {
                 case 1:
-
-               
-                    usageLogger.loadFromFile();
-                    usageLogger.getUserInputForMultipleEquipments();
-                    usageLogger.performDataStructureOperations();
-                    usageLogger.calculateUsageFromLogs();
-                   
                   
-                    std::cout << "Displaying Usage Logs Once:" << std::endl;
-                    usageLogger.displayUsageLogs(); // Tek seferde kullanım günlüklerini listele
-                    usageLogger.displayEquipmentUsageCount();
-                    std::cout << "Press Enter to exit...";
-                    std::cin.get(); 
-                    break;
+                
+                        PrintCentered("  Equipment List ");
+                        PrintCentered("1. Mountain bike");
+                        PrintCentered("2. Elliptical training ");
+                        PrintCentered("3. Railway Power ");
+                        PrintCentered("4. Dumbbell");
+                        PrintCentered("5. Shuttle Stand");
+                        PrintCentered("6. Punching ball");
+                        PrintCentered("7. Back to Main Menu");
+
+                        usageLogger.loadFromFile();
+                        usageLogger.getUserInputForMultipleEquipments();
+                        usageLogger.performDataStructureOperations();
+                        usageLogger.calculateUsageFromLogs();
+
+
+                        std::cout << "Displaying Usage Logs Once:" << std::endl;
+                        usageLogger.displayUsageLogs(); // Tek seferde kullanım günlüklerini listele
+                        usageLogger.displayEquipmentUsageCount();
+                        std::cout << "Press Enter to exit...";
+                        std::cin.get();
+                
+                        system("cls");
+                        break;
+                    
                 case 2:
                    
                     // Bakım planı oluşturma
-                    scheduler.scheduleMaintenance("Treadmill", "2023-12-15");
-                    scheduler.scheduleMaintenance("Dumbbells", "2023-12-20");
-
-                    // Bakım kaydı ekleme
-                    scheduler.addMaintenanceRecord("Treadmill", "2023-12-15");
-                    scheduler.addMaintenanceRecord("Dumbbells", "2023-12-19");
-
-                    // Bakım durumunu kontrol etme
-                    scheduler.checkMaintenanceStatus("Treadmill", "2023-12-16");
-                    scheduler.checkMaintenanceStatus("Dumbbells", "2023-12-21");
+                    scheduler.scheduleMaintenance("Treadmill", "2023-11-15");
+                    scheduler.scheduleMaintenance("Dumbbells", "2023-11-20");
+                    scheduler.scheduleMaintenance("Mountain bike", "2023-11-15");
+                    scheduler.scheduleMaintenance("Elliptical training", "2023-11-20");
+                    scheduler.scheduleMaintenance("Shuttle Stand", "2023-11-27");
+                    scheduler.scheduleMaintenance("Punching ball", "2023-11-14");
 
                     // Bakım planını görüntüleme
                     scheduler.displayMaintenanceSchedule();
 
-                   
+                    // Bakım durumunu kontrol etme
+                    scheduler.checkMaintenanceStatus("Treadmill", "2023-11-16");
+                    scheduler.checkMaintenanceStatus("Mountain bike", "2023-11-15");
+                    scheduler.checkMaintenanceStatus("Punching ball", "2023 - 11 - 14");
+                                                     
                     break;
+                   
                 case 3:
-                             system("cls");
+
+                    purchaseSystem.displayPurchaseOptions(); 
+                    char option;
+                    std::cout << "Select an option to buy (A to I): ";
+                    std::cin >> option;
+
+                    if (purchaseSystem.buyItem(option)) {
+                        std::cout << "Thank you for your purchase!" << std::endl;
+                    }
+                    else {
+                        std::cout << "Purchase failed. Please try again." << std::endl;
+                    }
+
+
+                    return 0;
+
+                    
                     break;
                 case 4:
                    
@@ -221,8 +252,7 @@ int main() {
                     break;
                 }
             }
-            // Ekipman kontrolü için işlevleri ekleyebilirsiniz.
-            system("cls");
+            
             break;
 
         }
@@ -272,9 +302,14 @@ int main() {
 
         case 5:
             return 0;
+
+       
         default:
             std::cout << "Invalid choice. Please try again." << std::endl;
+           
         }
+
+        
     }
     
 
