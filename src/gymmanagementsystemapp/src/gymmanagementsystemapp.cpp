@@ -6,7 +6,7 @@
 #include <queue>
 #include <fstream>
 #include <sstream>
-#include "..\..\..\..\..\data_structures_hw_1\ce205-midterm-ali-emre-samet-anaz\src\gymmanagementsystem\src\gymmanagementsystem.cpp"
+#include "..\..\..\..\ce205-midterm-ali-emre-samet-anaz\src\gymmanagementsystem\src\gymmanagementsystem.cpp"
 
 
 
@@ -46,7 +46,8 @@ int main() {
         PrintCentered("2. Schedule");
         PrintCentered("3. Equipment Control");
         PrintCentered("4. Financials");
-        PrintCentered("5. Exit");
+        PrintCentered("5. Give Feedback");
+        PrintCentered("6. Exit");
 
 
         int choice;
@@ -450,6 +451,52 @@ int main() {
 
 
         case 5:
+            while (true) {
+
+
+                PrintCentered("  FEEDBACK ");
+                PrintCentered("1. ");
+                PrintCentered("2.  ");
+                PrintCentered("3. ");
+                PrintCentered("4. Back to Main Menu");
+
+                int subChoice;
+                std::cin >> subChoice;
+                system("cls");
+                switch (subChoice) {
+                case 1:
+                    //kullanıcının nickname ini iste
+                    //ismi feedback.txt ye kaydet
+                    break;
+                case 2:
+                    //kullanıcının yorumunu iste
+                    // yorumu feedback.txt ye kaydet
+                    break;
+                case 3:
+                    //kullanıcıdan 0 ile 10 arasından bir puan iste
+                    //puanı feedback.txt ye kaydet
+                    break;
+
+                case 4:
+                    // sırayla ekrana yazdırma zımbırtısı alisko sen o is gobusunu kıtlarım
+
+                    system("cls");
+                    break;
+                default:
+                    std::cout << "Invalid choice. Please try again." << std::endl;
+                }
+
+                if (subChoice == 4) {
+                    break;
+                }
+                // Finansal işlevleri ekleyebilirsiniz.
+            }
+        
+        system("cls");
+        break;
+
+        case 6:
+
             return 0;
 
 
