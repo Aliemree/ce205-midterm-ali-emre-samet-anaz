@@ -6,7 +6,7 @@
 #include <queue>
 #include <fstream>
 #include <sstream>
-#include "C:\Users\samet\OneDrive\Masaüstü\data_structures_hw_1\ce205-midterm-ali-emre-samet-anaz\src\gymmanagementsystem\src\gymmanagementsystem.cpp"
+#include "..\..\..\..\ce205-midterm-ali-emre-samet-anaz\src\gymmanagementsystem\src\gymmanagementsystem.cpp"
 
 
 
@@ -27,6 +27,9 @@ int main() {
     usageLogger.loadFromFile();
     MaintenanceScheduler scheduler;
     Purchase purchaseSystem;
+    MembershipFeeTracking membershipTracker;
+    DiscountOffers discountTracker;
+    StockManagement stockManager;
 
 
 
@@ -393,16 +396,30 @@ int main() {
                 system("cls");
                 switch (subChoice) {
                 case 1:
+                    
 
-                    system("cls");
+
+                    membershipTracker.displayMembershipFeeList();
+                    char typeOption;
+                    std::cout << "Enter the membership type (A - I): ";
+                    std::cin >> typeOption;
+                    
+                    membershipTracker.getAndSaveUserInfo();
+                    membershipTracker.setMembershipType(typeOption);
                     break;
                 case 2:
-                    // Güncelleme işlevini ekleyebilirsiniz.
-                    system("cls");
+                    discountTracker.displayDiscountOptions();
+
+                    char userDiscount;
+                    std::cout << "Enter the discount code: ";
+                    std::cin >> userDiscount;
+                    discountTracker.evaluateDiscountRequest(userDiscount);
+                   
                     break;
                 case 3:
-                    // Silme işlevini ekleyebilirsiniz.
-                    system("cls");
+                    stockManager.displayStock();
+                    PrintCentered("STOK HARAMDIR");
+                   
                     break;
                 case 4:
                     system("cls");
@@ -434,7 +451,4 @@ int main() {
 
     }
 
-
-
-    //return 0;
 }

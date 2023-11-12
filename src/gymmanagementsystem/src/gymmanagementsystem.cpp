@@ -623,6 +623,133 @@ private:
 };
 
 
+class MembershipFeeTracking{
+public:
+    MembershipFeeTracking() {
+        loadMembershipFeeTrackingList(); // Fiyat listesini yükle
+    }
+
+    void displayMembershipFeeList() {
+        std::cout << "\nMembership Fee List:\n";
+        for (const auto& entry : priceList) {
+            std::cout << entry.first << ". " << entry.second.first << " : " << entry.second.second << "$" << std::endl;
+        }
+    }
+    void getAndSaveUserInfo() {
+        std::ifstream inFile("members.txt"); // Dosyayı okuma modunda aç
+        if (inFile.is_open()) {
+            std::string line;
+            std::cout << "Existing Members:\n";
+            while (std::getline(inFile, line)) {
+                std::cout << line << std::endl;
+            }
+            inFile.close();
+        }
+        else {
+            std::cerr << "Unable to open the file!" << std::endl;
+        }
+    }
+
+
+void setMembershipType(char option) {
+    if (priceList.find(option) != priceList.end()) {
+        std::cout << "You've selected: " << priceList[option].first << " for " << priceList[option].second << "$." << std::endl;
+        // Üyelik türünü kullanıcının seçtiği türe ayarla veya kaydet
+    }
+else {
+ std::cout << "Invalid option! Please select a valid item." << std::endl;
+}
+}
+
+void createHeap() {
+        for (const auto& entry : priceList) {
+            heap.push_back(entry.second);
+        }
+        std::make_heap(heap.begin(), heap.end(), compareByPrice);
+    }
+
+    void displayHeap() {
+        std::cout << "\nHeap Structure:\n";
+        for (const auto& entry : heap) {
+            std::cout << entry.first << " : " << entry.second << "$" << std::endl;
+        }
+    }
+
+private:
+    std::unordered_map<char, std::pair<std::string, int>> priceList;
+    std::vector<std::pair<std::string, int>> heap;
+
+    void loadMembershipFeeTrackingList() {
+        priceList['A'] = { "Fitness / Normal Membership : 1 Month (5 days a week)", 20 };
+        priceList['B'] = { "Fitness / Normal Membership : 1 Month (3 days a week)", 15 };
+        priceList['C'] = { "Fitness / Student Discount : 1 Month (3 days a week)", 10 };
+        priceList['D'] = { "Swimming / Normal Membership : 1 Month (5 days a week)", 25 };
+        priceList['E'] = { "Swimming / Normal Membership : 1 Month (3 days a week)", 20 };
+        priceList['F'] = { "Swimming / Student Discount : 1 Month (3 days a week)", 15 };
+        priceList['G'] = { "Fitness and Swimming / Normal Membership : 1 Month (5 days a week)", 40 };
+        priceList['H'] = { "Fitness and Swimming / Normal Membership : 1 Month (3 days a week)", 30 };
+        priceList['I'] = { "Fitness and Swimming / Student Discount : 1 Month (3 days a week)", 20 };
+    }
+
+    static bool compareByPrice(const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
+        return a.second < b.second;
+    }
+};
+
+class DiscountOffers {
+public:
+    void displayDiscountOptions() {
+        std::cout << "\nDiscount Offers:\n";
+        for (const auto& entry : discountList) {
+            std::cout << entry.first << ". " << entry.second.first << " : " << entry.second.second << "$" << std::endl;
+        }
+    }
+
+    void evaluateDiscountRequest(char discountCode) {
+        if (discountList.find(discountCode) != discountList.end()) {
+            std::cout << "Congratulations! You've applied a " << discountList[discountCode].first << " discount." << std::endl;
+            // İndirim kodunu değerlendir
+        }
+        else {
+            std::cout << "Invalid discount code! Please enter a valid code." << std::endl;
+        }
+    }
+
+    void defineDiscountCode(char code, const std::string& description, int discountAmount) {
+        discountList[code] = { description, discountAmount };
+        std::cout << "New discount code defined: " << code << " - " << description << " (" << discountAmount << "% off)." << std::endl;
+        // Yeni bir indirim kodu tanımla
+    }
+
+private:
+    std::unordered_map<char, std::pair<std::string, int>> discountList;
+    // Diğer fonksiyonlar...
+};
+
+class StockManagement {
+public:
+    void addStockItem(const std::string& item, int quantity) {
+        stock[item] += quantity;
+    }
+
+    void displayStock() {
+        std::cout << "Stock List:\n\n";
+        for (const auto& entry : stock) {
+            std::cout << entry.first << ": " << entry.second << " items\n";
+        }
+        
+    }
+
+
+private:
+    std::unordered_map<std::string, int> stock;
+};
+
+
+
+
+
+
 
 
 
