@@ -1,7 +1,5 @@
 ﻿#include "../header/gymmanagementsystem.h"
-#include <stdexcept>
-
-#include <fstream>
+#include <stdexcept>#include <fstream>
 #include <list>
 #include <iostream>
 #include <vector>
@@ -375,7 +373,7 @@ class EquipmentUsageLogger {
 public:
     void logUsage(const std::string& equipmentName, const std::string& user, const std::string& purpose) {
         usageLog.push_back("Equipment: " + equipmentName + " used by " + user + " for " + purpose);
-        usageMap[equipmentName]++;
+       usageMap[equipmentName]++;
         saveToFile();  // Her yeni kullanımı dosyaya kaydet
     }
 
@@ -420,6 +418,7 @@ public:
     }
 
     void loadFromFile() {
+    
         std::ifstream file("usage_logs.txt");
         if (file.is_open()) {
             std::string line;
@@ -573,15 +572,20 @@ public:
     bool buyItem(char option) {
         if (priceList.find(option) != priceList.end()) {
             std::cout << "You've purchased " << priceList[option].first << " for " << priceList[option].second << "$." << std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            system("cls");
             return true;
         }
         else {
             std::cout << "Invalid option! Please select a valid item." << std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            system("cls");
             return false;
         }
     }
 
 private:
+
     std::unordered_map<char, std::pair<std::string, int>> priceList;
     std::vector<std::string> usageLog;
 
@@ -630,10 +634,14 @@ public:
 void setMembershipType(char option) {
     if (priceList.find(option) != priceList.end()) {
         std::cout << "You've selected: " << priceList[option].first << " for " << priceList[option].second << "$." << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        system("cls");
         // Üyelik türünü kullanıcının seçtiği türe ayarla veya kaydet
     }
 else {
  std::cout << "Invalid option! Please select a valid item." << std::endl;
+ std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+ system("cls");
 }
 }
 

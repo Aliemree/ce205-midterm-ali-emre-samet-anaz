@@ -6,11 +6,8 @@
 #include <queue>
 #include <fstream>
 #include <sstream>
-<<<<<<< HEAD
-#include "..\..\..\..\ce205-midterm-ali-emre-samet-anaz\src\gymmanagementsystem\src\gymmanagementsystem.cpp"
-=======
 #include "..\..\..\..\..\data_structures_hw_1\ce205-midterm-ali-emre-samet-anaz\src\gymmanagementsystem\src\gymmanagementsystem.cpp"
->>>>>>> e4b2fda4bc19b60eeaaa8e7df65269f568f44fdd
+
 
 
 
@@ -78,33 +75,29 @@ int main() {
                    
                     break;
                 case 2:
-                    // Güncelleme işlevini ekleyebilirsiniz.
-
+                 
                     gym.updateMembertoFile();
-
-
-
                     system("cls");
                     break;
+
                 case 3:
+
                     gym.listMembers();
-                    // Silme işlevini ekleyebilirsiniz.
                     gym.removeMember();
                     system("cls");
+
                     break;
                 case 4:
 
-                    
                     gym.listMembers();
                     system("cls");
-
-
 
                     break;
 
                 case 5:
                     system("cls");
                     break;
+
                 default:
                     std::cout << "Invalid choice. Please try again." << std::endl;
                 }
@@ -121,13 +114,14 @@ int main() {
 
         case 2: {
             while (true) {
+                system("cls");
                 PrintCentered("  Scheduling ");
                 PrintCentered("1. Workout Programs");
                 PrintCentered("2. Class Scheduling ");
                 PrintCentered("3. Participation Tracking");
                 PrintCentered("4. Instructor Assignments");
                 PrintCentered("5. Back to Main Menu");
-
+               
 
                 int subsubChoice;
                 std::cin >> subsubChoice;
@@ -135,6 +129,7 @@ int main() {
                 switch (subsubChoice) {
                 case 1:
                     while (true) {
+                      
                         PrintCentered("  Workout Programs ");
                         PrintCentered("1. CHEST WORKOUT");
                         PrintCentered("2.  BACK WORKOUT ");
@@ -144,16 +139,17 @@ int main() {
                         PrintCentered("6. SHOULDER WORKOUT");
                         PrintCentered("7. LEGS ");
                         PrintCentered("8. BACK TO MAIN MENU");
-
-
+                       
+                       
 
 
                         int sub1Choice;
                         std::cin >> sub1Choice;
-
+                      
 
                         switch (sub1Choice) {
                         case 1:
+                           
                             std::cout << "\n\n\n\n";
                             std::cout << "\t PUSH UP:                 3 SETS;       15,12,10 REPS\n\n";
                             std::cout << "\t INCLINED BENCH-PRESS:    3 SETS;       15,12,10 REPS\n\n";
@@ -293,7 +289,7 @@ int main() {
                 system("cls");
                 switch (subChoice) {
                 case 1:
-
+                    
 
                     PrintCentered("  Equipment List ");
                     PrintCentered("1. Mountain bike");
@@ -348,9 +344,13 @@ int main() {
 
                     if (purchaseSystem.buyItem(option)) {
                         std::cout << "Thank you for your purchase!" << std::endl;
+                        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                        system("cls");
                     }
                     else {
                         std::cout << "Purchase failed. Please try again." << std::endl;
+                        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                        system("cls");
                     }
                     break;
 
@@ -368,6 +368,8 @@ int main() {
                     PrintCentered("\t8.Do not bring children onto the gym floor. Children must remain in the childcare area.\n");
                     PrintCentered("\t9.Do not disturb others. Focus on your own workout and allow others to do the same.\n");
                     PrintCentered("\t10.Before beginning your workout, wash your hands and wipe off any cologne or perfume.\n\n");
+                    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+                    system("cls");
 
                     break;
                 case 5:
@@ -375,6 +377,8 @@ int main() {
                     break;
                 default:
                     std::cout << "Invalid choice. Please try again." << std::endl;
+                    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                    system("cls");
                 }
 
                 if (subChoice == 5) {
