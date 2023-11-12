@@ -6,7 +6,7 @@
 #include <queue>
 #include <fstream>
 #include <sstream>
-#include "C:\Users\samet\OneDrive\Masaüstü\data_structures_hw_1\ce205-midterm-ali-emre-samet-anaz\src\gymmanagementsystem\src\gymmanagementsystem.cpp"
+#include "..\..\..\..\..\data_structures_hw_1\ce205-midterm-ali-emre-samet-anaz\src\gymmanagementsystem\src\gymmanagementsystem.cpp"
 
 
 
@@ -68,7 +68,7 @@ int main() {
                 case 1:
                     gym.registration();
                     gym.saveMembersToFile();
-                    system("cls");
+                   
                     break;
                 case 2:
                     // Güncelleme işlevini ekleyebilirsiniz.
@@ -87,7 +87,9 @@ int main() {
                     break;
                 case 4:
 
+                    
                     gym.listMembers();
+                    system("cls");
 
 
 

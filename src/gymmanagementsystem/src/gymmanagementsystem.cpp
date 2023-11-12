@@ -3,7 +3,6 @@
 
 #include <fstream>
 #include <list>
-
 #include <iostream>
 #include <vector>
 #include <string>
@@ -12,6 +11,8 @@
 #include <queue>
 #include <fstream>
 #include <sstream>
+#include <chrono>
+#include <thread>
 
 
 
@@ -68,9 +69,7 @@ public:
 
             std::cout << "Members from file:" << std::endl;
 
-            for (const Member& member : loadedMembers) {
-                std::cout << "Name: " << member.getName() << ", Contact: " << member.getContact() << std::endl;
-            }
+            
 
             std::cout << "1. Update a Member" << std::endl;
             std::cout << "2. Remove a Member" << std::endl;
@@ -80,46 +79,11 @@ public:
             std::cin >> choice;
 
             if (choice == 1) {
-                std::cout << "Enter the name of the member you want to update: ";
-                std::string name;
-                std::cin >> name;
-
-                auto it = std::find_if(loadedMembers.begin(), loadedMembers.end(),
-                    [name](const Member& member) { return member.getName() == name; });
-
-                if (it != loadedMembers.end()) {
-                    std::string updatedName, updatedSurname, updatedContact;
-
-                    std::cout << "Enter updated name: ";
-                    std::cin >> updatedName;
-                    std::cout << "Enter updated surname: ";
-                    std::cin >> updatedSurname;
-                    std::cout << "Enter updated contact: ";
-                    std::cin >> updatedContact;
-
-                    Member updatedMember(updatedName, updatedSurname, updatedContact);
-                    *it = updatedMember;
-
-                    // Güncellenmiş üyeyi dosyaya kaydet
-                    std::ofstream updatedFile(filename);
-
-                    if (updatedFile.is_open()) {
-                        for (const Member& member : loadedMembers) {
-                            updatedFile << member.getName() << "," << member.getSurName() << "," << member.getContact() << "\n";
-                        }
-                        updatedFile.close();
-                        std::cout << "Member with name " << updatedName << " has been updated." << std::endl;
-                    }
-                    else {
-                        std::cout << "Failed to open the file for saving." << std::endl;
-                    }
-                }
-                else {
-                    std::cout << "Member with name " << name << " not found. Update failed." << std::endl;
-                }
+                // ... (update logic)
             }
             else if (choice == 2) {
-                listMembers();
+                // Remove logic
+                listMembers();  // Show members after removal
                 std::cout << "Enter the name of the member you want to remove: ";
                 std::string name;
                 std::cin >> name;
@@ -132,6 +96,9 @@ public:
 
                     // Güncellenmiş üyeyi dosyaya kaydet
                     std::ofstream updatedFile(filename);
+                    std::cout << "Member informations removed!: ";
+                    std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                    system("cls");
 
                     if (updatedFile.is_open()) {
                         for (const Member& member : loadedMembers) {
@@ -148,6 +115,7 @@ public:
                     std::cout << "Member with name " << name << " not found." << std::endl;
                 }
             }
+            // ... (back to main menu logic)
         }
         else {
             std::cout << "Failed to open the file for reading." << std::endl;
@@ -158,6 +126,7 @@ public:
         std::cin.get(); // Kullanıcının herhangi bir tuşa basmasını bekleyin.
         system("cls");  // Ekranı temizle
     }
+
 
 
     void updateMembertoFile() {
@@ -208,6 +177,9 @@ public:
 
                 // Güncellenmiş üyeyi dosyaya kaydet
                 std::ofstream updatedFile(filename);
+                std::cout << "Member information updated!: ";
+                std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                system("cls");
 
                 if (updatedFile.is_open()) {
                     for (const Member& member : loadedMembers) {
@@ -244,33 +216,34 @@ public:
         }
     }
     void listMembers() {
+        system("cls"); // Ekranı temizle
         std::string filename = "members.txt"; // Dosya yolunu belirt
         std::ifstream file(filename);
 
-        if (file.is_open()) {
-            std::string line;
-            std::cout << "Members from file:" << std::endl;
-            while (std::getline(file, line)) {
-                std::istringstream ss(line);
-                std::string name, surname, contact;
-                std::getline(ss, name, ',');
-                std::getline(ss, surname, ',');
-                std::getline(ss, contact, ',');
-                std::cout << "\nName: " << name << ", \nSurname:" << surname << ", \nContact: " << contact << std::endl;
-            }
-            file.close();
+        std::string line;
+        std::cout << "Members from file:" << std::endl;
 
+        while (std::getline(file, line)) {
+            std::istringstream ss(line);
+            std::string name, surname, contact;
+            std::getline(ss, name, ',');
+            std::getline(ss, surname, ',');
+            std::getline(ss, contact, ',');
+            std::cout << "\nName: " << name << ", \nSurname:" << surname << ", \nContact: " << contact << std::endl;
         }
 
-        else {
-            std::cout << "Failed to open the file for reading." << std::endl;
-        }
+        file.close();
 
+        std::cout << "\nPress enter to continue";
+        std::cin.ignore(); // Enter tuşunu beklemek için gereklidir.
+        std::cin.get(); // Kullanıcının herhangi bir tuşa basmasını bekleyin.
     }
+
 
     void saveMembersToFile() {
         std::string filename = "members.txt"; // Dosya yolunu değiştirdik
         std::ofstream file(filename);
+        system("cls");
 
         if (file.is_open()) {
             for (const Member& member : members) {
@@ -278,6 +251,9 @@ public:
             }
             file.close();
             std::cout << "Members have been saved to " << filename << std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            system("cls");
+
         }
         else {
             std::cout << "Failed to open the file for saving." << std::endl;
@@ -610,15 +586,15 @@ private:
     std::vector<std::string> usageLog;
 
     void loadPriceList() {
-        priceList['A'] = { "Fitness / Normal Membership : 1 Month (5 days a week)", 20 };
-        priceList['B'] = { "Fitness / Normal Membership : 1 Month (3 days a week)", 15 };
-        priceList['C'] = { "Fitness / Student Discount : 1 Month (3 days a week)", 10 };
-        priceList['D'] = { "Swimming / Normal Membership : 1 Month (5 days a week)", 25 };
-        priceList['E'] = { "Swimming / Normal Membership : 1 Month (3 days a week)", 20 };
-        priceList['F'] = { "Swimming / Student Discount : 1 Month (3 days a week)", 15 };
-        priceList['G'] = { "Fitness and Swimming / Normal Membership : 1 Month (5 days a week)", 40 };
-        priceList['H'] = { "Fitness and Swimming / Normal Membership : 1 Month (3 days a week)", 30 };
-        priceList['I'] = { "Fitness and Swimming / Student Discount : 1 Month (3 days a week)", 20 };
+        priceList['A'] = { "Supplement / Whey Protein 30gr", 2 };
+        priceList['B'] = { "Supplement / Isolate Protein 30gr)", 2 };
+        priceList['C'] = { "Supplement / Creatine Monohydrate 5mg)", 1 };
+        priceList['D'] = { "Supplement / Pre-Workout 10gr (200mg cafein)", 2 };
+        priceList['E'] = { "Supplement / Cafein 1pill-200mg", 1 };
+        priceList['F'] = { "Supplement / Glutamine 25gr", 2 };
+        priceList['G'] = { "Supplement / BCAA 20gr ", 2 };
+        priceList['H'] = { "Supplement / Arginine 12.5 gr", 1 };
+        priceList['I'] = { "Vitamines / Multivitamines ", 5 };
     }
 };
 
