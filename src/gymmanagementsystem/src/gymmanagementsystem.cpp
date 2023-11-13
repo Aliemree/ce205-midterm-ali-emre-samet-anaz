@@ -11,6 +11,8 @@
 #include <sstream>
 #include <chrono>
 #include <thread>
+#include <unordered_set>
+
 
 
 
@@ -555,6 +557,181 @@ private:
 
 };
 
+class ClassScheduling {
+public:
+    // Öğrenci yapıları
+    struct Student {
+        std::string name;
+        std::vector<int> workoutPrograms; // Öğrencinin katıldığı antrenman programlarının indeksleri
+    };
+
+    // Antrenman programı yapıları
+    struct WorkoutProgram {
+        std::string name;
+        std::vector<int> participants; // Antrenmana katılan öğrenci indeksleri
+    };
+    // Antrenman programları listesi
+    std::vector<WorkoutProgram> programs;
+
+    // Öğrencilerin listesi
+    std::vector<Student> students;
+
+    void createSampleData() {
+        // Antrenman programları oluştur
+        WorkoutProgram chestProgram = { "Chest Workout", {} };
+        WorkoutProgram backProgram = { "Back Workout", {} };
+        WorkoutProgram bicepsProgram = { "Biceps Workout", {} };
+
+        // Öğrenciler oluştur
+        Student student1 = { "Samet", {0, 1} }; 
+        Student student2 = { "Ali", {1, 2} };   
+        Student student3 = { "Hüseyin", {1, 2} };
+        // Programlara katılan öğrencileri güncelle
+        chestProgram.participants = { 0, 1 };
+        backProgram.participants = { 0, 2 };
+        bicepsProgram.participants = { 1 };
+
+        // Programları ve öğrencileri vektörlere ekle
+        programs = { chestProgram, backProgram, bicepsProgram };
+        students = { student1, student2,student3 };
+    } 
+    void listStudentsAndPrograms() {
+        std::cout << "Ogrenciler ve Katildiklari Programlar:\n";
+        for (size_t i = 0; i < students.size(); ++i) {
+            std::cout << students[i].name << " - Katildigi Programlar: ";
+            for (int programIndex : students[i].workoutPrograms) {
+                std::cout << programs[programIndex].name << " ";
+            }
+            std::cout << std::endl;
+        }
+    }
+    // SCC için kullanılan yardımcı fonksiyonlar
+    void performSCC() {
+        std::unordered_set<int> visited;
+        std::vector<std::vector<int>> adjList(programs.size() + students.size());
+
+        // Creating adjacency list based on the relationships between students and workout programs
+        for (size_t i = 0; i < programs.size(); ++i) {
+            for (int participant : programs[i].participants) {
+                adjList[i].push_back(participant + programs.size());
+                adjList[participant + programs.size()].push_back(i);
+            }
+        }
+
+        std::vector<int> order; // For storing the finishing order
+        for (size_t i = 0; i < adjList.size(); ++i) {
+            if (visited.find(i) == visited.end()) {
+                dfs(i, adjList, visited, order);
+            }
+        }
+
+        // Reversing the graph
+        std::vector<std::vector<int>> reversed(adjList.size());
+        for (size_t i = 0; i < adjList.size(); ++i) {
+            for (int j : adjList[i]) {
+                reversed[j].push_back(i);
+            }
+        }
+
+        visited.clear();
+
+        // Printing SCC components
+        std::vector<std::vector<int>> sccComponents;
+        for (int i = order.size() - 1; i >= 0; --i) {
+            int node = order[i];
+            if (visited.find(node) == visited.end()) {
+                std::vector<int> component;
+                dfs(node, reversed, visited, component);
+                sccComponents.push_back(component);
+            }
+        }
+
+        // Printing SCC components
+        std::cout << "Strongly Connected Components:\n";
+        for (const auto& component : sccComponents) {
+            std::cout << "Component: ";
+            for (int node : component) {
+                std::cout << node << " ";
+            }
+            std::cout << std::endl;
+        }
+    }
+
+    void dfs(int node, const std::vector<std::vector<int>>& adjList, std::unordered_set<int>& visited, std::vector<int>& order) {
+        visited.insert(node);
+        for (int neighbor : adjList[node]) {
+            if (visited.find(neighbor) == visited.end()) {
+                dfs(neighbor, adjList, visited, order);
+            }
+        }
+        order.push_back(node);
+    }
+   
+};
+
+
+class ParticipationTracking {
+public:
+    std::unordered_map<std::string, std::vector<std::string>> participantPrograms;
+
+    void addParticipation(const std::string& participant, const std::string& program) {
+        participantPrograms[participant].push_back(program);
+    }
+
+    void listParticipations(const std::string& participant) {
+        if (participantPrograms.find(participant) != participantPrograms.end()) {
+            std::cout << participant << " participated in: ";
+            for (const std::string& program : participantPrograms[participant]) {
+                std::cout << program << " ";
+            }
+            std::cout << std::endl;
+        }
+        else {
+            std::cout << participant << " didn't participate in any program." << std::endl;
+        }
+    }
+
+    void readMembersFromFile(const std::string& filename) {
+        std::ifstream file(filename);
+        if (file.is_open()) {
+            std::string line;
+            while (std::getline(file, line)) {
+                std::istringstream iss(line);
+                std::string name;
+                iss >> name;
+                std::string program;
+                while (iss >> program) {
+                    participantPrograms[name].push_back(program);
+                }
+            }
+            file.close();
+        }
+    }
+};
+
+
+
+class InstructorAssignments {
+public:
+    std::unordered_map<std::string, std::vector<std::string>> instructorToCourses;
+
+    void assignCourseToInstructor(const std::string& instructor, const std::string& course) {
+        instructorToCourses[instructor].push_back(course);
+    }
+
+    void listCoursesForInstructor(const std::string& instructor) {
+        if (instructorToCourses.find(instructor) != instructorToCourses.end()) {
+            std::cout << "Courses assigned to " << instructor << ": ";
+            for (const std::string& course : instructorToCourses[instructor]) {
+                std::cout << course << " ";
+            }
+            std::cout << std::endl;
+        }
+        else {
+            std::cout << instructor << " is not assigned to any course." << std::endl;
+        }
+    }
+};
 class Purchase {
 public:
     Purchase() {
@@ -679,56 +856,65 @@ private:
         return a.second < b.second;
     }
 };
-
-class DiscountOffers {
+class DiscountOffer {
 public:
-    void displayDiscountOptions() {
-        std::cout << "\nDiscount Offers:\n";
-        for (const auto& entry : discountList) {
-            std::cout << entry.first << ". " << entry.second.first << " : " << entry.second.second << "$" << std::endl;
-        }
+    std::unordered_map<char, std::pair<std::string, int>> priceList;
+
+    DiscountOffer() {
+        priceList['A'] = { "Fitness / Normal Membership: 1 Month (5 days a week)", 20 };
+        priceList['B'] = { "Fitness / Normal Membership: 1 Month (3 days a week)", 15 };
+        priceList['C'] = { "Fitness / Student Discount: 1 Month (3 days a week)", 10 };
+        priceList['D'] = { "Swimming / Normal Membership: 1 Month (5 days a week)", 25 };
+        priceList['E'] = { "Swimming / Normal Membership: 1 Month (3 days a week)", 20 };
+        priceList['F'] = { "Swimming / Student Discount: 1 Month (3 days a week)", 15 };
+        priceList['G'] = { "Fitness and Swimming / Normal Membership: 1 Month (5 days a week)", 40 };
+        priceList['H'] = { "Fitness and Swimming / Normal Membership: 1 Month (3 days a week)", 30 };
+        priceList['I'] = { "Fitness and Swimming / Student Discount: 1 Month (3 days a week)", 20 };
     }
 
-    void evaluateDiscountRequest(char discountCode) {
-        if (discountList.find(discountCode) != discountList.end()) {
-            std::cout << "Congratulations! You've applied a " << discountList[discountCode].first << " discount." << std::endl;
-            // İndirim kodunu değerlendir
+    int getPrice(char code) {
+        if (priceList.find(code) != priceList.end()) {
+            return priceList[code].second;
+        }
+        return -2;  // Eğer kod bulunamazsa -2 döndürür
+    }
+    void printPriceList() {
+        for (const auto& entry : priceList) {
+            std::cout << "Code: " << entry.first << " - " << entry.second.first << " - Price: " << entry.second.second << std::endl;
+        }
+    }
+};
+
+class OtherClass {
+public:
+    void displayPriceList() {
+        DiscountOffer discountOffer;
+        discountOffer.printPriceList();
+    }
+};
+
+
+class GymPOS {
+public:
+    // Ürün listesi ve fiyatları için hash table
+    std::unordered_map<std::string, double> productPrices;
+
+    // Ürün eklemek için
+    void addProduct(const std::string& productName, double price) {
+        productPrices[productName] = price;
+    }
+
+    // Ürünü satın al
+    void purchaseProduct(const std::string& productName) {
+        if (productPrices.find(productName) != productPrices.end()) {
+            std::cout << "You purchased " << productName << " for $" << productPrices[productName] << std::endl;
+            // Burada, ürünü stoktan düşebilirsiniz.
         }
         else {
-            std::cout << "Invalid discount code! Please enter a valid code." << std::endl;
+            std::cout << "The product is not available." << std::endl;
         }
     }
-
-    void defineDiscountCode(char code, const std::string& description, int discountAmount) {
-        discountList[code] = { description, discountAmount };
-        std::cout << "New discount code defined: " << code << " - " << description << " (" << discountAmount << "% off)." << std::endl;
-        // Yeni bir indirim kodu tanımla
-    }
-
-private:
-    std::unordered_map<char, std::pair<std::string, int>> discountList;
-    // Diğer fonksiyonlar...
 };
-
-class StockManagement {
-public:
-    void addStockItem(const std::string& item, int quantity) {
-        stock[item] += quantity;
-    }
-
-    void displayStock() {
-        std::cout << "Stock List:\n\n";
-        for (const auto& entry : stock) {
-            std::cout << entry.first << ": " << entry.second << " items\n";
-        }
-        
-    }
-
-
-private:
-    std::unordered_map<std::string, int> stock;
-};
-
 
 
 

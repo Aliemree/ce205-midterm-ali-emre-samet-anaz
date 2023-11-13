@@ -6,7 +6,8 @@
 #include <queue>
 #include <fstream>
 #include <sstream>
-#include "..\..\..\..\ce205-midterm-ali-emre-samet-anaz\src\gymmanagementsystem\src\gymmanagementsystem.cpp"
+#include "../../gymmanagementsystem/src/gymmanagementsystem.cpp"
+
 
 
 
@@ -29,8 +30,15 @@ int main() {
     MaintenanceScheduler scheduler;
     Purchase purchaseSystem;
     MembershipFeeTracking membershipTracker;
-    DiscountOffers discountTracker;
-    StockManagement stockManager;
+ 
+    GymPOS gymPOS;
+    ClassScheduling classScheduler;
+    ParticipationTracking tracker;
+    InstructorAssignments assignments;
+    DiscountOffer offer;
+    char code;
+    OtherClass other;
+
 
 
 
@@ -124,13 +132,13 @@ int main() {
                 PrintCentered("5. Back to Main Menu");
                
 
-                int subsubChoice;
-                std::cin >> subsubChoice;
+                int subsubsubChoice;
+                std::cin >> subsubsubChoice;
 
-                switch (subsubChoice) {
+                switch (subsubsubChoice) {
                 case 1:
                     while (true) {
-                      
+
                         PrintCentered("  Workout Programs ");
                         PrintCentered("1. CHEST WORKOUT");
                         PrintCentered("2.  BACK WORKOUT ");
@@ -140,17 +148,12 @@ int main() {
                         PrintCentered("6. SHOULDER WORKOUT");
                         PrintCentered("7. LEGS ");
                         PrintCentered("8. BACK TO MAIN MENU");
-                       
-                       
-
-
                         int sub1Choice;
                         std::cin >> sub1Choice;
-                      
-
+                        
                         switch (sub1Choice) {
                         case 1:
-                           
+
                             std::cout << "\n\n\n\n";
                             std::cout << "\t PUSH UP:                 3 SETS;       15,12,10 REPS\n\n";
                             std::cout << "\t INCLINED BENCH-PRESS:    3 SETS;       15,12,10 REPS\n\n";
@@ -162,8 +165,6 @@ int main() {
                             std::cout << "\t CABLE CROSS:             3 SETS;       15,12,10 REPS\n\n";
                             std::cout << "\t SEATED MACHINE FLY:      3 SETS;       15,12,10 REPS\n\n";
                             std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n\n\n\n";
-
-
 
                             break;
                         case 2:
@@ -256,22 +257,64 @@ int main() {
                             break;
                         default:
                             std::cout << "Invalid choice. Please try again." << std::endl;
-                            break;
-                        }
-                    }
-
-                default:
-                    std::cout << "Invalid choice. Please try again." << std::endl;
+                            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                            system("cls");
                 }
 
-                if (subsubChoice == 5) {
+                if (subsubsubChoice == 5) {
 
                     break;
                 }
             }
-            // Programınıza uygun olarak programları, sınıf saatlerini ve diğer programları yönetmek için işlevleri ekleyebilirsiniz.
+
+            break;
+
+        
+
+        case 2:
+            classScheduler.createSampleData();
+            classScheduler.listStudentsAndPrograms();
+
+            // Strongly Connected Components (SCC) algoritmasını uygula
+            classScheduler.performSCC();
+            main();
+                    break;
+                 
+        case 3: 
+
+            tracker.listParticipations("Ali");
+            tracker.listParticipations("Ayse");
+            tracker.listParticipations("Mehmet");
+
+            return 0;
+            
+            break;
+             
+        case 4:
+            // Eğitmenlere ders atamaları yapılıyor
+            assignments.assignCourseToInstructor("Instructor1", "Math");
+            assignments.assignCourseToInstructor("Instructor1", "Physics");
+            assignments.assignCourseToInstructor("Instructor2", "Chemistry");
+
+            // Eğitmenlere atanan dersleri listele
+            assignments.listCoursesForInstructor("Instructor1");
+            break;
+        case 5:
             system("cls");
             break;
+        ddefault:
+            std::cout << "Invalid choice. Please try again." << std::endl;
+                
+                }
+
+                if (subsubsubChoice == 5) {
+
+                    break;
+                }
+            }
+
+            break;
+
         }
 
         case 3: {
@@ -419,17 +462,34 @@ int main() {
                     membershipTracker.setMembershipType(typeOption);
                     break;
                 case 2:
-                    discountTracker.displayDiscountOptions();
 
-                    char userDiscount;
-                    std::cout << "Enter the discount code: ";
-                    std::cin >> userDiscount;
-                    discountTracker.evaluateDiscountRequest(userDiscount);
+                    other.displayPriceList();
+                {
+                        std::cout << "Enter a code (A-I): ";
+                        char code;
+                        std::cin >> code;
+
+                        int price = offer.getPrice(code);
+
+                        if (price != -2) {
+                            std::cout << "Price for code " << code << " is: " << price << std::endl;
+                        }
+                        else {
+                            std::cout << "Invalid code entered!" << std::endl;
+                        }
+
+                }
+
                    
                     break;
                 case 3:
-                    stockManager.displayStock();
-                    PrintCentered("STOK HARAMDIR");
+                    gymPOS.addProduct("Protein Shake", 5.0);
+                    gymPOS.addProduct("Energy Bar", 2.5);
+                    gymPOS.addProduct("Water Bottle", 1.0);
+                    gymPOS.purchaseProduct("Protein Shake");
+                    gymPOS.purchaseProduct("Energy Bar");
+                    gymPOS.purchaseProduct("Yoga Mat");
+                
                    
                     break;
                 case 4:
