@@ -916,6 +916,68 @@ public:
     }
 };
 
+    class Feedback {
+    public:
+        void getUserInput() {
+            std::cout << "Enter your nickname: ";
+            std::cin >> nickname_;
+
+            std::cout << "Enter your comment: ";
+            std::cin.ignore(); // Ignore the newline character left in the buffer
+            std::getline(std::cin, comment_);
+
+            std::cout << "Enter your rating (1-10): ";
+            std::cin >> rating_;
+        }
+
+        void saveToFeedbackFile() {
+            std::ofstream file("feedback.txt", std::ios::app);
+            if (file.is_open()) {
+                file << "Nickname: " << nickname_ << std::endl;
+                file << "Comment: " << comment_ << std::endl;
+                file << "Rating: " << rating_ << std::endl;
+                file << "-------------------------" << std::endl; // Separate entries in the file
+                file.close();
+                std::cout << "Your feedback has been saved!" << std::endl;
+                std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                system("cls");
+
+            }
+            else {
+                std::cout << "Error! Your feedback couldn't be saved." << std::endl;
+            }
+        }
+        void listFeedbacks() {
+            std::ifstream file("feedback.txt");
+            std::string line;
+            while (std::getline(file, line)) {
+                std::cout << line << std::endl;
+            }
+            file.close();
+        }
+
+        void developerInfo() {
+
+            std::cout << "Our Github Links:" << std::endl;
+            std::cout << "----------------------------" << std::endl; 
+            std::cout << "https://github.com/Aliemree" << std::endl;
+            std::cout << "https://github.com/SametAnaz" << std::endl;
+            std::cout << "----------------------------" << std::endl;
+            std::cout << "Press enter for exit." << std::endl;
+
+        }
+
+    private:
+        std::string nickname_;
+        std::string comment_;
+        int rating_;
+    };
+
+
+
+
+
+
 
 
 

@@ -38,6 +38,7 @@ int main() {
     DiscountOffer offer;
     char code;
     OtherClass other;
+    Feedback feedback;
 
 
 
@@ -513,11 +514,11 @@ int main() {
         case 5:
             while (true) {
 
-
+                system("cls");
                 PrintCentered("  FEEDBACK ");
-                PrintCentered("1. ");
-                PrintCentered("2.  ");
-                PrintCentered("3. ");
+                PrintCentered("1.Give Feedback");
+                PrintCentered("2.List Feedbacks ");
+                PrintCentered("3.Developer Information ");
                 PrintCentered("4. Back to Main Menu");
 
                 int subChoice;
@@ -525,22 +526,35 @@ int main() {
                 system("cls");
                 switch (subChoice) {
                 case 1:
-                    //kullanıcının nickname ini iste
-                    //ismi feedback.txt ye kaydet
+                    system("cls");
+                    feedback.getUserInput();
+                    feedback.saveToFeedbackFile();
+
                     break;
                 case 2:
-                    //kullanıcının yorumunu iste
-                    // yorumu feedback.txt ye kaydet
+                    system("cls");
+                    feedback.listFeedbacks();
+                    std::cout << "\nPress Enter to exit...";
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cin.get();
+
+                    continue;
+
                     break;
+
                 case 3:
-                    //kullanıcıdan 0 ile 10 arasından bir puan iste
-                    //puanı feedback.txt ye kaydet
+                    system("cls");
+                    feedback.developerInfo();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cin.get();
+
+                    continue;
                     break;
 
                 case 4:
-                    // sırayla ekrana yazdırma zımbırtısı alisko sen o is gobusunu kıtlarım
 
-                    system("cls");
+
+
                     break;
                 default:
                     std::cout << "Invalid choice. Please try again." << std::endl;
@@ -551,10 +565,9 @@ int main() {
                 }
                 // Finansal işlevleri ekleyebilirsiniz.
             }
-        
-        system("cls");
-        break;
 
+            system("cls");
+            break;
         case 6:
 
             return 0;
