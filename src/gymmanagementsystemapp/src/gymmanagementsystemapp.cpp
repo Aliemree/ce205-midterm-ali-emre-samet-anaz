@@ -23,8 +23,10 @@ void PrintCentered(const std::string& text) {
     std::cout << std::string(padding, ' ') << text << std::string(padding, ' ') << std::endl;
 }
 
-int main() {
 
+int main() {
+    LoginScreen loginScreen;
+    loginScreen.authenticateUser();
     EquipmentUsageLogger usageLogger;
     usageLogger.loadFromFile();
     MaintenanceScheduler scheduler;
@@ -39,6 +41,7 @@ int main() {
     char code;
     OtherClass other;
     Feedback feedback;
+
 
 
 
@@ -131,7 +134,7 @@ int main() {
                 PrintCentered("3. Participation Tracking");
                 PrintCentered("4. Instructor Assignments");
                 PrintCentered("5. Back to Main Menu");
-               
+              
 
                 int subsubsubChoice;
                 std::cin >> subsubsubChoice;
@@ -139,7 +142,7 @@ int main() {
                 switch (subsubsubChoice) {
                 case 1:
                     while (true) {
-
+                        system("cls");
                         PrintCentered("  Workout Programs ");
                         PrintCentered("1. CHEST WORKOUT");
                         PrintCentered("2.  BACK WORKOUT ");
@@ -154,7 +157,7 @@ int main() {
                         
                         switch (sub1Choice) {
                         case 1:
-
+                            system("cls");
                             std::cout << "\n\n\n\n";
                             std::cout << "\t PUSH UP:                 3 SETS;       15,12,10 REPS\n\n";
                             std::cout << "\t INCLINED BENCH-PRESS:    3 SETS;       15,12,10 REPS\n\n";
@@ -166,10 +169,13 @@ int main() {
                             std::cout << "\t CABLE CROSS:             3 SETS;       15,12,10 REPS\n\n";
                             std::cout << "\t SEATED MACHINE FLY:      3 SETS;       15,12,10 REPS\n\n";
                             std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n\n\n\n";
-
+                            std::cout << "\nPress Enter to go back to the menu...";
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            std::cin.get();
+                            continue;
                             break;
                         case 2:
-
+                            system("cls");
                             std::cout << "\n\n\n\n";
                             std::cout << "\t WIDE GRIP PULL-UP:       3 SETS;        15,12,10 REPS\n\n";
                             std::cout << "\t LAT PULL DOWN BACK:      3 SETS;        15,12,10 REPS\n\n";
@@ -180,10 +186,12 @@ int main() {
                             std::cout << "\t BARBELL BENT OVER:       3 SETS;        15,12,10 REPS\n\n";
                             std::cout << "\t DEAD LIFT:               3 SETS;        15,12,10 REPS\n\n";
                             std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n\n";
-                            // Durum 2break;
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            std::cin.get();
+                            continue;
                             break;
                         case 3:
-
+                            system("cls");
                             std::cout << "\n\n\n\n";
                             std::cout << "\t SMALL GRIP PULL-UP:       3 SETS;        15,12,10 REPS\n\n";
                             std::cout << "\t PREACHER CURLS:           3 SETS;        15,12,10 REPS\n\n";
@@ -195,11 +203,14 @@ int main() {
                             std::cout << "\t REVERSE CURLS:            3 SETS;        15,12,10 REPS\n\n";
                             std::cout << "\t HAMMER CURLS:             3 SETS;        15,12,10 REPS\n\n";
                             std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n\n";
-                            // Durum 3
+                            std::cout << "\nPress Enter to go back to the menu...";
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            std::cin.get();
+                            continue;
                             break;
                         case 4:
 
-
+                            system("cls");
                             std::cout << "\n\n\n\n";
                             std::cout << "\t DIAMOND PUSH-UP:               3 SETS;     15,12,10 REPS\n\n";
                             std::cout << "\t FLAT BAR TRICEPS EXTENSION:    3 SETS;     15,12,10 REPS\n\n";
@@ -211,11 +222,14 @@ int main() {
                             std::cout << "\t CABLE PUSH OVERHEAD:           3 SETS;     15,12,10 REPS\n\n";
                             std::cout << "\t TRICEPS DIPS:                  3 SETS;     15,12,10 REPS\n\n";
                             std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n\n";
-                            // Durum 4
+                            std::cout << "\nPress Enter to go back to the menu...";
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            std::cin.get();
+                            continue;
                             break;
                         case 5:
 
-
+                            system("cls");
                             std::cout << "\n\n\n\n";
                             std::cout << "\t HANGING LEG RAISE:                             3 SETS;     15,12,10 REPS\n\n";
                             std::cout << "\t MACHINE CRUNCH:                                3 SETS;     15,12,10 REPS\n\n";
@@ -225,9 +239,13 @@ int main() {
                             std::cout << "\t EXERCISE BALL PIKE:                            3 SETS;     15,12,10 REPS\n\n";
                             std::cout << "\t PLANK:                                         7,5,3 MINUTES\n\n";
                             std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n\n";
-                            // Durum 5
+                            std::cout << "\nPress Enter to go back to the menu...";
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            std::cin.get();
+                            continue;
                             break;
                         case 6:
+                            system("cls");
                             std::cout << "\n\n\n\n";
                             std::cout << "\t BAREBELL FRONT PRESS:           3 SETS;     15,12,10 REPS\n\n";
                             std::cout << "\t DUMBELL PRESS:                  3 SETS;     15,12,10 REPS\n\n";
@@ -237,9 +255,13 @@ int main() {
                             std::cout << "\t UPRIGHT ROW:                    3 SETS;     15,12,10 REPS\n\n";
                             std::cout << "\t SHRUG:                          3 SETS;     15,12,10 REPS\n\n";
                             std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n";
-                            // Durum 6
+                            std::cout << "\nPress Enter to go back to the menu...";
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            std::cin.get();
+                            continue;
                             break;
                         case 7:
+                            system("cls");
                             std::cout << "\n\n";
                             std::cout << "\t SET-UPS:                      3 SETS;      15,12,10 REPS\n\n";
                             std::cout << "\t SUMO DUMBELL SQUATS:          3 SETS;      15,12,10 REPS\n\n";
@@ -250,7 +272,10 @@ int main() {
                             std::cout << "\t REVERSE LEGS CRULS:           3 SETS;      15,12,10 REPS\n\n";
                             std::cout << "\t HEAVY LEG PRESS:              3 SETS;      15,12,10 REPS\n\n";
                             std::cout << "\t PLEASE DON'T LIFT OVER-WEIGHT\n\n";
-                            // Durum 7
+                            std::cout << "\nPress Enter to go back to the menu...";
+                            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            std::cin.get();
+                            continue;
                             break;
                         case 8:
                             system("cls");
@@ -273,12 +298,15 @@ int main() {
         
 
         case 2:
+            system("cls");
             classScheduler.createSampleData();
             classScheduler.listStudentsAndPrograms();
-
             // Strongly Connected Components (SCC) algoritmasını uygula
             classScheduler.performSCC();
-            main();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cin.get();
+            continue;
+          
                     break;
                  
         case 3: 
@@ -287,8 +315,6 @@ int main() {
             tracker.listParticipations("Ayse");
             tracker.listParticipations("Mehmet");
 
-            return 0;
-            
             break;
              
         case 4:
@@ -299,6 +325,7 @@ int main() {
 
             // Eğitmenlere atanan dersleri listele
             assignments.listCoursesForInstructor("Instructor1");
+
             break;
         case 5:
             system("cls");
@@ -474,9 +501,15 @@ int main() {
 
                         if (price != -2) {
                             std::cout << "Price for code " << code << " is: " << price << std::endl;
+                            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                            system("cls");
+
                         }
                         else {
                             std::cout << "Invalid code entered!" << std::endl;
+                            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+                            system("cls");
+
                         }
 
                 }

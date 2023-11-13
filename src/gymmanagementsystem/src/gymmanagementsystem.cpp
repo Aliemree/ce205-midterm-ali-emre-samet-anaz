@@ -14,7 +14,40 @@
 #include <unordered_set>
 
 
+class LoginScreen {
+public:
+    void authenticateUser() {
 
+
+
+        std::string username, password;
+
+        while (true) {
+            std::cout << "Username: ";
+            std::cin >> username;
+
+            std::cout << "Password: ";
+            std::cin >> password;
+
+            if (isValidCredentials(username, password)) {
+                std::cout << "Authentication successful. Welcome, " << username << "!" << std::endl;
+                std::this_thread::sleep_for(std::chrono::milliseconds(1500));
+                system("cls");
+                break;
+            }
+            else {
+                std::cout << "Invalid credentials. Please try again." << std::endl;
+            }
+        }
+    }
+
+private:
+    bool isValidCredentials(const std::string& username, const std::string& password) {
+        // Burada kullanıcı adı ve şifreyi kontrol edin (örneğin, sabit bir kullanıcı adı ve şifre ile karşılaştırabilirsiniz)
+        // Gerçek bir uygulamada, genellikle bir kullanıcı veritabanından kontrol edilir.
+        return (username == "admin" && password == "admin");
+    }
+};
 
 class Member {
 public:
@@ -39,7 +72,6 @@ private:
     std::string surname;
     std::string contact;
 };
-
 class GymManager {
 public:
     void addMember(const Member& member) {
@@ -303,7 +335,6 @@ private:
     std::vector<Member> members;
     std::unordered_map<std::string, Member> memberHashMap; // Üyeleri adlarına göre saklamak için bir hash tablosu
 };
-
 class Equipment {
 public:
     Equipment() : name(""), lastMaintenance(""), usageLogs(0) {}
@@ -328,7 +359,6 @@ private:
     std::string lastMaintenance;
     int usageLogs;
 };
-
 class EquipmentManager {
 public:
     void addEquipment(const Equipment& equipment) {
@@ -498,7 +528,6 @@ private:
     std::vector<std::string> usageLog;
     std::unordered_map<std::string, int> usageMap;
 };
-
 class MaintenanceScheduler {
 public:
 public:
@@ -556,7 +585,6 @@ private:
     std::unordered_map<std::string, std::string> maintenanceRecords;
 
 };
-
 class ClassScheduling {
 public:
     // Öğrenci yapıları
@@ -577,6 +605,7 @@ public:
     std::vector<Student> students;
 
     void createSampleData() {
+        system("cls");
         // Antrenman programları oluştur
         WorkoutProgram chestProgram = { "Chest Workout", {} };
         WorkoutProgram backProgram = { "Back Workout", {} };
@@ -655,6 +684,7 @@ public:
             }
             std::cout << std::endl;
         }
+
     }
 
     void dfs(int node, const std::vector<std::vector<int>>& adjList, std::unordered_set<int>& visited, std::vector<int>& order) {
@@ -668,8 +698,6 @@ public:
     }
    
 };
-
-
 class ParticipationTracking {
 public:
     std::unordered_map<std::string, std::vector<std::string>> participantPrograms;
@@ -679,16 +707,21 @@ public:
     }
 
     void listParticipations(const std::string& participant) {
+        system("cls");
         if (participantPrograms.find(participant) != participantPrograms.end()) {
             std::cout << participant << " participated in: ";
             for (const std::string& program : participantPrograms[participant]) {
                 std::cout << program << " ";
             }
             std::cout << std::endl;
+
         }
         else {
             std::cout << participant << " didn't participate in any program." << std::endl;
         }
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+       
+        
     }
 
     void readMembersFromFile(const std::string& filename) {
@@ -708,9 +741,6 @@ public:
         }
     }
 };
-
-
-
 class InstructorAssignments {
 public:
     std::unordered_map<std::string, std::vector<std::string>> instructorToCourses;
@@ -778,8 +808,6 @@ private:
         priceList['I'] = { "Vitamines / Multivitamines ", 5 };
     }
 };
-
-
 class MembershipFeeTracking{
 public:
     MembershipFeeTracking() {
@@ -884,7 +912,6 @@ public:
         }
     }
 };
-
 class OtherClass {
 public:
     void displayPriceList() {
@@ -892,8 +919,6 @@ public:
         discountOffer.printPriceList();
     }
 };
-
-
 class GymPOS {
 public:
     // Ürün listesi ve fiyatları için hash table
@@ -908,14 +933,16 @@ public:
     void purchaseProduct(const std::string& productName) {
         if (productPrices.find(productName) != productPrices.end()) {
             std::cout << "You purchased " << productName << " for $" << productPrices[productName] << std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            system("cls");
+
             // Burada, ürünü stoktan düşebilirsiniz.
         }
         else {
-            std::cout << "The product is not available." << std::endl;
+            
         }
     }
 };
-
     class Feedback {
     public:
         void getUserInput() {
