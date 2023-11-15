@@ -89,7 +89,7 @@ int main() {
                     break;
                 case 2:
                  
-                    gym.updateMembertoFile();
+                    gym.updateMemberToFile();
                     system("cls");
                     break;
 

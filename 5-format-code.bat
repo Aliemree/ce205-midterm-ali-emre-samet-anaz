@@ -4,6 +4,6 @@
 
 echo Formatting Code with Astyle...
 
-astyle --options="astyle-options.txt" --recursive "*.h" "*.cpp"
+astyle --options="astyle-options.txt" --recursive --exclude="src\tests\googletest" "*.h" "*.cpp"
 
 pause

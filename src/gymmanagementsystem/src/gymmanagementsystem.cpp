@@ -14,13 +14,11 @@
 #include <unordered_set>
 
 
-class LoginScreen {
+struct LoginScreen {
 public:
-    void authenticateUser() {
+    std::string username, password;
+    int authenticateUser() {
 
-
-
-        std::string username, password;
 
         while (true) {
             std::cout << "Username: ";
@@ -33,10 +31,12 @@ public:
                 std::cout << "Authentication successful. Welcome, " << username << "!" << std::endl;
                 std::this_thread::sleep_for(std::chrono::milliseconds(1500));
                 system("cls");
+                return 1;
                 break;
             }
             else {
                 std::cout << "Invalid credentials. Please try again." << std::endl;
+                return 0;
             }
         }
     }
@@ -48,8 +48,7 @@ private:
         return (username == "admin" && password == "admin");
     }
 };
-
-class Member {
+struct Member {
 public:
     Member() : name(""), surname(""), contact("") {}
 
@@ -72,14 +71,19 @@ private:
     std::string surname;
     std::string contact;
 };
-class GymManager {
+struct GymManager {
 public:
-    void addMember(const Member& member) {
+
+    std::string member;
+
+    int addMember(const Member& member) {
         members.push_back(member);
         memberHashMap[member.getName()] = member;  // Hash tablosuna üyeyi ekle
+        return 0;
     }
 
-    void removeMember() {
+    int removeMember() {
+        
         std::string filename = "members.txt"; // Dosya yolunu belirt
         std::ifstream file(filename);
 
@@ -131,16 +135,18 @@ public:
                     std::cout << "Member informations removed!: ";
                     std::this_thread::sleep_for(std::chrono::milliseconds(2000));
                     system("cls");
-
+                    return 1;
                     if (updatedFile.is_open()) {
                         for (const Member& member : loadedMembers) {
                             updatedFile << member.getName() << "," << member.getSurName() << "," << member.getContact() << "\n";
                         }
                         updatedFile.close();
                         std::cout << "Member with name " << name << " has been removed." << std::endl;
+                        return 1;
                     }
                     else {
                         std::cout << "Failed to open the file for saving." << std::endl;
+                        return -1;
                     }
                 }
                 else {
@@ -161,7 +167,7 @@ public:
 
 
 
-    void updateMembertoFile() {
+    int updateMemberToFile() {
         std::string filename = "members.txt"; // Dosya yolunu belirt
         std::ifstream file(filename);
 
@@ -222,35 +228,56 @@ public:
                 }
                 else {
                     std::cout << "Failed to open the file for saving." << std::endl;
+                    return 1; // Hata durumunu belirt
                 }
             }
             else {
                 std::cout << "Member with name " << name << " not found. Update failed." << std::endl;
+                return 1; // Hata durumunu belirt
             }
         }
         else {
             std::cout << "Failed to open the file for reading." << std::endl;
+            return 1; // Hata durumunu belirt
         }
 
         // Kullanıcıdan bir tuşa basılmasını bekleyin.
         std::cout << "Press any key to clear the screen...";
         std::cin.get(); // Kullanıcının herhangi bir tuşa basmasını bekleyin.
         system("cls");  // Ekranı temizle
+
+        return 0; // Başarı durumunu belirt
     }
 
 
+    int displayMembers() {
+        system("cls"); // Ekranı temizle
 
+        if (members.empty()) {
+            std::cout << "No gym members to display." << std::endl;
+            return -1;  // Hata durumunu belirt
+        }
 
-    void displayMembers() {
         std::cout << "Gym Members:" << std::endl;
         for (const Member& member : members) {
             std::cout << "Name: " << member.getName() << ", Contact: " << member.getContact() << std::endl;
         }
+
+        std::cout << "\nPress enter to continue";
+        std::cin.ignore(); // Enter tuşunu beklemek için gereklidir.
+        std::cin.get(); // Kullanıcının herhangi bir tuşa basmasını bekleyin.
+
+        return 0;  // Başarı durumunu belirt
     }
-    void listMembers() {
+    int listMembers() {
         system("cls"); // Ekranı temizle
         std::string filename = "members.txt"; // Dosya yolunu belirt
         std::ifstream file(filename);
+
+        if (!file.is_open()) {
+            std::cout << "Failed to open the file for reading." << std::endl;
+            return -1;  // Hata durumunu belirt
+        }
 
         std::string line;
         std::cout << "Members from file:" << std::endl;
@@ -269,30 +296,33 @@ public:
         std::cout << "\nPress enter to continue";
         std::cin.ignore(); // Enter tuşunu beklemek için gereklidir.
         std::cin.get(); // Kullanıcının herhangi bir tuşa basmasını bekleyin.
+
+        return 1;  // Başarı durumunu belirt
     }
 
-
-    void saveMembersToFile() {
+    int saveMembersToFile() {
         std::string filename = "members.txt"; // Dosya yolunu değiştirdik
         std::ofstream file(filename);
         system("cls");
 
-        if (file.is_open()) {
-            for (const Member& member : members) {
-                file << member.getName() << "," << member.getSurName() << "," << member.getContact() << "\n";
-            }
-            file.close();
-            std::cout << "Members have been saved to " << filename << std::endl;
-            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-            system("cls");
-
-        }
-        else {
+        if (!file.is_open()) {
             std::cout << "Failed to open the file for saving." << std::endl;
+            return -1;  // Hata durumunu belirt
         }
+
+        for (const Member& member : members) {
+            file << member.getName() << "," << member.getSurName() << "," << member.getContact() << "\n";
+        }
+
+        file.close();
+        std::cout << "Members have been saved to " << filename << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+        system("cls");
+
+        return 0;  // Başarı durumunu belirt
     }
 
-    void loadMembersFromFile() {
+    int loadMembersFromFile() {
         std::string filename = "members.txt"; // Dosya yolunu belirt
         std::ifstream file(filename);
 
@@ -313,13 +343,15 @@ public:
 
             file.close();
             std::cout << "Members have been loaded from " << filename << std::endl;
+            return 0;  // Başarı durumunu belirt
         }
         else {
             std::cout << "Failed to open the file for loading." << std::endl;
+            return -1;  // Hata durumunu belirt
         }
     }
 
-    void registration() {
+    int registration() {
         std::string name, contact, surname;
         std::cout << "Enter Name: ";
         std::cin >> name;
@@ -328,14 +360,16 @@ public:
         std::cout << "Enter Contact: ";
         std::cin >> contact;
         Member newMember(name, surname, contact);
-        addMember(newMember);
+        int result = addMember(newMember);
+        return result;  // addMember'dan gelen sonucu geri döndür
     }
+
 
 private:
     std::vector<Member> members;
     std::unordered_map<std::string, Member> memberHashMap; // Üyeleri adlarına göre saklamak için bir hash tablosu
 };
-class Equipment {
+struct Equipment {
 public:
     Equipment() : name(""), lastMaintenance(""), usageLogs(0) {}
 
@@ -359,21 +393,23 @@ private:
     std::string lastMaintenance;
     int usageLogs;
 };
-class EquipmentManager {
+struct EquipmentManager {
 public:
-    void addEquipment(const Equipment& equipment) {
+    int addEquipment(const Equipment& equipment) {
         equipments.push_back(equipment);
         equipmentHashMap[equipment.getName()] = equipment;
+        return 0;  // Başarı durumunu belirt
     }
 
-    void displayEquipment() {
+    int displayEquipment() {
         std::cout << "Gym Equipment:" << std::endl;
         for (const Equipment& equipment : equipments) {
             std::cout << "Name: " << equipment.getName() << ", Last Maintenance: " << equipment.getLastMaintenance() << ", Usage Logs: " << equipment.getUsageLogs() << std::endl;
         }
+        return 0;  // Başarı durumunu belirt
     }
 
-    void listEquipment() {
+    int listEquipment() {
         std::string filename = "equipment.txt";
         std::ifstream file(filename);
 
@@ -389,41 +425,46 @@ public:
                 std::cout << "Name: " << equipment.getName() << ", Last Maintenance: " << equipment.getLastMaintenance() << ", Usage Logs: " << equipment.getUsageLogs() << std::endl;
             }
             file.close();
+            return 0;  // Başarı durumunu belirt
         }
         else {
             std::cout << "Failed to open the file for reading." << std::endl;
+            return -1;  // Hata durumunu belirt
         }
     }
 
-    // Other methods for updating, removing, saving, loading equipment data
+    // Diğer ekipman verisi güncelleme, kaldırma, kaydetme, yükleme yöntemleri
 
 private:
     std::vector<Equipment> equipments;
     std::unordered_map<std::string, Equipment> equipmentHashMap;
 };
-class EquipmentUsageLogger {
+struct EquipmentUsageLogger {
 public:
-    void logUsage(const std::string& equipmentName, const std::string& user, const std::string& purpose) {
+    int logUsage(const std::string& equipmentName, const std::string& user, const std::string& purpose) {
         usageLog.push_back("Equipment: " + equipmentName + " used by " + user + " for " + purpose);
-       usageMap[equipmentName]++;
+        usageMap[equipmentName]++;
         saveToFile();  // Her yeni kullanımı dosyaya kaydet
+        return 0;  // Başarı durumunu belirt
     }
 
-    void displayUsageLogs() {
+    int displayUsageLogs() {
         std::cout << "Usage Logs:" << std::endl;
         for (const auto& log : usageLog) {
             std::cout << log << std::endl;
         }
+        return 0;  // Başarı durumunu belirt
     }
 
-    void displayEquipmentUsageCount() {
+    int displayEquipmentUsageCount() {
         std::cout << "Equipment Usage Counts:" << std::endl;
         for (const auto& pair : usageMap) {
             std::cout << pair.first << " used " << pair.second << " times." << std::endl;
         }
+        return 0;  // Başarı durumunu belirt
     }
 
-    void getUserInputAndLogUsage() {
+    int getUserInputAndLogUsage() {
         std::string equipmentName, user, purpose;
         std::cout << "Enter equipment Number: ";
         std::getline(std::cin >> std::ws, equipmentName);
@@ -435,9 +476,10 @@ public:
         std::getline(std::cin >> std::ws, purpose);
 
         logUsage(equipmentName, user, purpose);
+        return 0;  // Başarı durumunu belirt
     }
 
-    void getUserInputForMultipleEquipments() {
+    int getUserInputForMultipleEquipments() {
         int numEquipments;
         std::cout << "How much equipment did you use: ";
         std::cin >> numEquipments;
@@ -447,10 +489,10 @@ public:
             std::cout << "Enter details for equipment " << i + 1 << ":" << std::endl;
             getUserInputAndLogUsage();
         }
+        return 0;  // Başarı durumunu belirt
     }
 
-    void loadFromFile() {
-    
+    int loadFromFile() {
         std::ifstream file("usage_logs.txt");
         if (file.is_open()) {
             std::string line;
@@ -459,23 +501,30 @@ public:
                 updateEquipmentUsageCount(line); // Her girdide ekipman kullanım sayısını güncelle
             }
             file.close();
+            return 0;  // Başarı durumunu belirt
+        }
+        else {
+            std::cout << "Failed to open the file for loading." << std::endl;
+            return -1;  // Hata durumunu belirt
         }
     }
 
-    void saveToFile() {
+    int saveToFile() {
         std::ofstream file("usage_logs.txt");
         if (file.is_open()) {
             for (const auto& log : usageLog) {
                 file << log << "\n";
             }
             file.close();
+            return 0;  // Başarı durumunu belirt
         }
         else {
             std::cout << "Unable to save to file." << std::endl;
+            return -1;  // Hata durumunu belirt
         }
     }
 
-    void calculateUsageFromLogs() {
+    int calculateUsageFromLogs() {
         std::ifstream file("usage_logs.txt");
         if (file.is_open()) {
             std::string line;
@@ -484,25 +533,32 @@ public:
                 updateEquipmentUsageCount(line); // Her girdide ekipman kullanım sayısını güncelle
             }
             file.close();
+            return 0;  // Başarı durumunu belirt
+        }
+        else {
+            std::cout << "Failed to open the file for calculation." << std::endl;
+            return -1;  // Hata durumunu belirt
         }
     }
 
-    void updateEquipmentUsageCount(const std::string& log) {
+    int updateEquipmentUsageCount(const std::string& log) {
         std::istringstream ss(log);
         std::string equipmentName, user, purpose;
         ss >> equipmentName >> user >> purpose;
         usageMap[equipmentName]++;
+        return 0;  // Başarı durumunu belirt
     }
 
     // Yeni eklenen işlevler
-    void performDataStructureOperations() {
+    int performDataStructureOperations() {
         std::cout << "Performing operations on various data structures and algorithms:" << std::endl;
         // Örnek olarak bir Double Linked List ve Stack kullanılıyor:
         performDoubleLinkedListOperations();
         performStackOperations();
+        return 0;  // Başarı durumunu belirt
     }
 
-    void performDoubleLinkedListOperations() {
+    int performDoubleLinkedListOperations() {
         std::list<std::string> doubleLinkedList;
         doubleLinkedList.push_back("Item 1");
 
@@ -510,9 +566,10 @@ public:
         for (const auto& item : doubleLinkedList) {
             std::cout << "Item: " << item << std::endl;
         }
+        return 0;  // Başarı durumunu belirt
     }
 
-    void performStackOperations() {
+    int performStackOperations() {
         std::stack<std::string> stackData;
         stackData.push("Data 1");
 
@@ -521,22 +578,22 @@ public:
             std::cout << "Stack Top: " << stackData.top() << std::endl;
             stackData.pop();
         }
+        return 0;  // Başarı durumunu belirt
     }
-
 
 private:
     std::vector<std::string> usageLog;
     std::unordered_map<std::string, int> usageMap;
 };
-class MaintenanceScheduler {
+struct MaintenanceScheduler {
 public:
-public:
-    void scheduleMaintenance(const std::string& equipmentName, const std::string& maintenanceDate) {
+    int scheduleMaintenance(const std::string& equipmentName, const std::string& maintenanceDate) {
         maintenanceSchedule[equipmentName] = maintenanceDate;
         std::cout << "Maintenance scheduled for " << equipmentName << " on " << maintenanceDate << std::endl;
+        return 0;  // Success status
     }
 
-    void performMaintenance() {
+    int performMaintenance() {
         std::stack<std::string> maintenanceStack;
 
         for (const auto& schedule : maintenanceSchedule) {
@@ -552,14 +609,17 @@ public:
 
             std::cout << "Maintenance completed for " << equipment << std::endl;
         }
+
+        return 0;  // Success status
     }
 
-    void addMaintenanceRecord(const std::string& equipmentName, const std::string& maintenanceDate) {
+    int addMaintenanceRecord(const std::string& equipmentName, const std::string& maintenanceDate) {
         maintenanceRecords[equipmentName] = maintenanceDate;
         std::cout << "Maintenance record added for " << equipmentName << " on " << maintenanceDate << std::endl;
+        return 0;  // Success status
     }
 
-    void checkMaintenanceStatus(const std::string& equipmentName, const std::string& currentDate) {
+    int checkMaintenanceStatus(const std::string& equipmentName, const std::string& currentDate) {
         if (maintenanceSchedule.find(equipmentName) != maintenanceSchedule.end()) {
             if (currentDate > maintenanceSchedule[equipmentName]) {
                 std::cout << equipmentName << " is due for maintenance!" << std::endl;
@@ -571,26 +631,29 @@ public:
         else {
             std::cout << "No maintenance schedule found for " << equipmentName << std::endl;
         }
+
+        return 0;  // Success status
     }
 
-    void displayMaintenanceSchedule() {
+    int displayMaintenanceSchedule() {
         std::cout << "Maintenance Schedule:" << std::endl;
         for (const auto& record : maintenanceSchedule) {
             std::cout << record.first << " - " << record.second << std::endl;
         }
+
+        return 0;  // Success status
     }
 
 private:
     std::unordered_map<std::string, std::string> maintenanceSchedule;
     std::unordered_map<std::string, std::string> maintenanceRecords;
-
 };
 class ClassScheduling {
 public:
     // Öğrenci yapıları
     struct Student {
         std::string name;
-        std::vector<int> workoutPrograms; // Öğrencinin katıldığı antrenman programlarının indeksleri
+        std::unordered_set<int> workoutPrograms; // Seyrek matris: Öğrencinin katıldığı antrenman programlarının indeksleri
     };
 
     // Antrenman programı yapıları
@@ -598,13 +661,18 @@ public:
         std::string name;
         std::vector<int> participants; // Antrenmana katılan öğrenci indeksleri
     };
+
     // Antrenman programları listesi
     std::vector<WorkoutProgram> programs;
 
     // Öğrencilerin listesi
     std::vector<Student> students;
 
-    void createSampleData() {
+    // Seyrek matris
+    std::vector<std::unordered_set<int>> sparseMatrix;
+
+
+    int createSampleData() {
         system("cls");
         // Antrenman programları oluştur
         WorkoutProgram chestProgram = { "Chest Workout", {} };
@@ -612,8 +680,8 @@ public:
         WorkoutProgram bicepsProgram = { "Biceps Workout", {} };
 
         // Öğrenciler oluştur
-        Student student1 = { "Samet", {0, 1} }; 
-        Student student2 = { "Ali", {1, 2} };   
+        Student student1 = { "Samet", {0, 1} };
+        Student student2 = { "Ali", {1, 2} };
         Student student3 = { "Hüseyin", {1, 2} };
         // Programlara katılan öğrencileri güncelle
         chestProgram.participants = { 0, 1 };
@@ -622,9 +690,15 @@ public:
 
         // Programları ve öğrencileri vektörlere ekle
         programs = { chestProgram, backProgram, bicepsProgram };
-        students = { student1, student2,student3 };
-    } 
-    void listStudentsAndPrograms() {
+        students = { student1, student2, student3 };
+
+        // Seyrek matrisi güncelle
+        updateSparseMatrix();
+
+        return 0; // Success status
+    }
+
+    int listStudentsAndPrograms() {
         std::cout << "Ogrenciler ve Katildiklari Programlar:\n";
         for (size_t i = 0; i < students.size(); ++i) {
             std::cout << students[i].name << " - Katildigi Programlar: ";
@@ -633,9 +707,13 @@ public:
             }
             std::cout << std::endl;
         }
+
+        return 0; // Success status
     }
+
+
     // SCC için kullanılan yardımcı fonksiyonlar
-    void performSCC() {
+    int performSCC() {
         std::unordered_set<int> visited;
         std::vector<std::vector<int>> adjList(programs.size() + students.size());
 
@@ -685,9 +763,10 @@ public:
             std::cout << std::endl;
         }
 
+        return 0; // Success status
     }
 
-    void dfs(int node, const std::vector<std::vector<int>>& adjList, std::unordered_set<int>& visited, std::vector<int>& order) {
+    int dfs(int node, const std::vector<std::vector<int>>& adjList, std::unordered_set<int>& visited, std::vector<int>& order) {
         visited.insert(node);
         for (int neighbor : adjList[node]) {
             if (visited.find(neighbor) == visited.end()) {
@@ -695,9 +774,24 @@ public:
             }
         }
         order.push_back(node);
+        return 0; // Success status
     }
-   
+
+    int updateSparseMatrix() {
+        sparseMatrix.clear();
+        sparseMatrix.resize(students.size(), std::unordered_set<int>());
+
+        for (size_t i = 0; i < students.size(); ++i) {
+            for (int programIndex : students[i].workoutPrograms) {
+                sparseMatrix[i].insert(programIndex);
+            }
+        }
+
+        return 0; // Success status
+    }
 };
+
+
 class ParticipationTracking {
 public:
     std::unordered_map<std::string, std::vector<std::string>> participantPrograms;
@@ -943,7 +1037,7 @@ public:
         }
     }
 };
-    class Feedback {
+class Feedback {
     public:
         void getUserInput() {
             std::cout << "Enter your nickname: ";
@@ -1000,18 +1094,7 @@ public:
         int rating_;
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+int Coruh::GymManagementSystem::GymManagementSystem::authenticateUser()
+{
+    return 0;
+}
