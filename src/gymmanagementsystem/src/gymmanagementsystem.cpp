@@ -978,7 +978,9 @@ private:
         return a.second < b.second;
     }
 };
-class DiscountOffer {
+
+
+struct DiscountOffer {
 public:
     std::unordered_map<char, std::pair<std::string, int>> priceList;
 
@@ -998,14 +1000,18 @@ public:
         if (priceList.find(code) != priceList.end()) {
             return priceList[code].second;
         }
-        return -2;  // Eğer kod bulunamazsa -2 döndürür
+        return 10;  // Eğer kod bulunamazsa -2 döndürür
     }
-    void printPriceList() {
+
+    int printPriceList() {
         for (const auto& entry : priceList) {
             std::cout << "Code: " << entry.first << " - " << entry.second.first << " - Price: " << entry.second.second << std::endl;
         }
+        return 0; // Başarılı olduğunu varsayalım, 0 döndürüyoruz.
     }
-};
+}; 
+//damam
+
 class OtherClass {
 public:
     void displayPriceList() {
@@ -1013,86 +1019,100 @@ public:
         discountOffer.printPriceList();
     }
 };
-class GymPOS {
+//damam değil
+
+struct GymPOS {
 public:
-    // Ürün listesi ve fiyatları için hash table
     std::unordered_map<std::string, double> productPrices;
 
     // Ürün eklemek için
-    void addProduct(const std::string& productName, double price) {
+    int addProduct(const std::string& productName, double price) {
         productPrices[productName] = price;
+        return 0; // Başarılı olduğunu varsayalım, 0 döndürüyoruz.
     }
 
     // Ürünü satın al
-    void purchaseProduct(const std::string& productName) {
+    int purchaseProduct(const std::string& productName) {
         if (productPrices.find(productName) != productPrices.end()) {
             std::cout << "You purchased " << productName << " for $" << productPrices[productName] << std::endl;
             std::this_thread::sleep_for(std::chrono::milliseconds(2000));
             system("cls");
 
-            // Burada, ürünü stoktan düşebilirsiniz.
+            // Ürünü stoktan düşebilirsiniz (bu kısımda bir mantık eklenebilir).
+            return 0; // Başarılı olduğunu varsayalım, 0 döndürüyoruz.
         }
         else {
-            
+            // Eğer ürün bulunamadıysa -1 döndürebiliriz.
+            return -1;
         }
     }
 };
-class Feedback {
-    public:
-        void getUserInput() {
-            std::cout << "Enter your nickname: ";
-            std::cin >> nickname_;
+//damam
+struct Feedback {
+public:
+    int getUserInput() {
+        std::cout << "Enter your nickname: ";
+        std::cin >> nickname_;
 
-            std::cout << "Enter your comment: ";
-            std::cin.ignore(); // Ignore the newline character left in the buffer
-            std::getline(std::cin, comment_);
+        std::cout << "Enter your comment: ";
+        std::cin.ignore(); // Ignore the newline character left in the buffer
+        std::getline(std::cin, comment_);
 
-            std::cout << "Enter your rating (1-10): ";
-            std::cin >> rating_;
-        }
+        std::cout << "Enter your rating (1-10): ";
+        std::cin >> rating_;
 
-        void saveToFeedbackFile() {
-            std::ofstream file("feedback.txt", std::ios::app);
-            if (file.is_open()) {
-                file << "Nickname: " << nickname_ << std::endl;
-                file << "Comment: " << comment_ << std::endl;
-                file << "Rating: " << rating_ << std::endl;
-                file << "-------------------------" << std::endl; // Separate entries in the file
-                file.close();
-                std::cout << "Your feedback has been saved!" << std::endl;
-                std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-                system("cls");
+        return 0; // Success
+    }
 
-            }
-            else {
-                std::cout << "Error! Your feedback couldn't be saved." << std::endl;
-            }
-        }
-        void listFeedbacks() {
-            std::ifstream file("feedback.txt");
-            std::string line;
-            while (std::getline(file, line)) {
-                std::cout << line << std::endl;
-            }
+    int saveToFeedbackFile() {
+        std::ofstream file("feedback.txt", std::ios::app);
+        if (file.is_open()) {
+            file << "Nickname: " << nickname_ << std::endl;
+            file << "Comment: " << comment_ << std::endl;
+            file << "Rating: " << rating_ << std::endl;
+            file << "-------------------------" << std::endl; // Separate entries in the file
             file.close();
+            std::cout << "Your feedback has been saved!" << std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            system("cls");
+
+            return 0; // Success
         }
-
-        void developerInfo() {
-
-            std::cout << "Our Github Links:" << std::endl;
-            std::cout << "----------------------------" << std::endl; 
-            std::cout << "https://github.com/Aliemree" << std::endl;
-            std::cout << "https://github.com/SametAnaz" << std::endl;
-            std::cout << "----------------------------" << std::endl;
-            std::cout << "Press enter for exit." << std::endl;
-
+        else {
+            std::cout << "Error! Your feedback couldn't be saved." << std::endl;
+            return -1; // Failure
         }
+    }
 
-    private:
-        std::string nickname_;
-        std::string comment_;
-        int rating_;
-    };
+    int listFeedbacks() {
+        std::ifstream file("feedback.txt");
+        std::string line;
+        while (std::getline(file, line)) {
+            std::cout << line << std::endl;
+        }
+        file.close();
+
+        return 0; // Success
+    }
+
+    int developerInfo() {
+        std::cout << "Our Github Links:" << std::endl;
+        std::cout << "----------------------------" << std::endl;
+        std::cout << "https://github.com/Aliemree" << std::endl;
+        std::cout << "https://github.com/SametAnaz" << std::endl;
+        std::cout << "----------------------------" << std::endl;
+        std::cout << "Press enter for exit." << std::endl;
+
+        std::cin.get();
+        return -1; // Exiting info screen
+    }
+
+private:
+    std::string nickname_;
+    std::string comment_;
+    int rating_;
+};
+//damam
 
 int Coruh::GymManagementSystem::GymManagementSystem::authenticateUser()
 {

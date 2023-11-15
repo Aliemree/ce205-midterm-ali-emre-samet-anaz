@@ -46,13 +46,22 @@ namespace Coruh
             int scheduleMaintenance();
             int performMaintenance();
             int addMaintenanceRecord();
-                int checkMaintenanceStatus();
-                int displayMaintenanceSchedule();
-                int createSampleData();
-                int listStudentsAndPrograms();
-                int performSCC();
-                int dfs();
-                int updateSparseMatrix();
+            int checkMaintenanceStatus();
+            int displayMaintenanceSchedule();
+            int createSampleData();
+            int listStudentsAndPrograms();
+            int performSCC();
+            int dfs();
+            int updateSparseMatrix();
+            int listParticipations();
+            int developerInfo();
+            int getUserInput();
+            int saveToFeedbackFile();
+            int listFeedbacks();
+            int addProduct();
+            int purchaseProduct();
+            int printPriceList();
+            int getPrice();
 
           
         };

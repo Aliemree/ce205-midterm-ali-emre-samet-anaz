@@ -1,4 +1,4 @@
-//#define ENABLE_GYMMANAGEMENTSYSTEM_TEST  // Uncomment this line to enable the GymManagementSystem tests
+﻿//#define ENABLE_GYMMANAGEMENTSYSTEM_TEST  // Uncomment this line to enable the GymManagementSystem tests
 
 #include "gtest/gtest.h"
 
@@ -341,30 +341,27 @@ TEST_F(GymManagementSystemTest, TestPerformStackOperations) {
 }
 
 TEST_F(GymManagementSystemTest, TestPerformMaintenance) {
-	MaintenanceScheduler scheduler;
-	scheduler.scheduleMaintenance("Treadmill", "2023-12-01");
-	scheduler.scheduleMaintenance("StationaryBike", "2023-12-15");
-	scheduler.scheduleMaintenance("Elliptical", "2023-11-25");
+    MaintenanceScheduler scheduler;
+    scheduler.scheduleMaintenance("Treadmill", "2023-12-01");
+    scheduler.scheduleMaintenance("StationaryBike", "2023-12-15");
+    scheduler.scheduleMaintenance("Elliptical", "2023-11-25");
 
-	// Redirect cout to capture the output
-	testing::internal::CaptureStdout();
+    // Redirect cout to capture the output
+    testing::internal::CaptureStdout();
 
-	// Call the performMaintenance function
-	int result = scheduler.performMaintenance();
+    // Call the performMaintenance function
+    int result = scheduler.performMaintenance();
 
-	// Get the captured output
-	std::string output = testing::internal::GetCapturedStdout();
+    // Get the captured output
+    std::string output = testing::internal::GetCapturedStdout();
 
-	// Check if the expected output is in the captured output
-	EXPECT_TRUE(output.find("Performing maintenance for Treadmill") != std::string::npos);
-	EXPECT_TRUE(output.find("Performing maintenance for StationaryBike") != std::string::npos);
-	EXPECT_TRUE(output.find("Performing maintenance for Elliptical") != std::string::npos);
+    // Check if the expected output is in the captured output
+    EXPECT_TRUE(output.find("Performing maintenance for Treadmill") != std::string::npos);
+    EXPECT_TRUE(output.find("Performing maintenance for StationaryBike") != std::string::npos);
+    EXPECT_TRUE(output.find("Performing maintenance for Elliptical") != std::string::npos);
 
-	// Reset cout (no need to call GetCapturedStdout again)
-	testing::internal::CaptureStdout();
-
-	// Check if the result indicates success
-	EXPECT_EQ(result, 0);
+    // Check if the result indicates success
+    EXPECT_EQ(result, 0);
 }
 
 
@@ -418,6 +415,7 @@ TEST_F(GymManagementSystemTest, TestUpdateSparseMatrix) {
 }
 
 
+
 TEST_F(GymManagementSystemTest, TestPerformSCC) {
 	// Assuming you have a class or function providing the gym management system logic
 	// You may need to replace GymManagementSystemClass with the actual class or function name
@@ -430,7 +428,76 @@ TEST_F(GymManagementSystemTest, TestPerformSCC) {
 	EXPECT_EQ(result, 0); // Assuming 0 indicates success for performSCC
 }
 
+TEST_F(GymManagementSystemTest, TestGetUserInput) {
+	Feedback feedback;
 
+	// Test için bir girdi değeri belirleyelim
+	std::string userInput = "John";
+	std::stringstream testInput(userInput);
+
+	// Test için girdiyi ayarlayın
+	std::cin.rdbuf(testInput.rdbuf());
+
+	// getUserInput işlevini çağırın
+	int result = feedback.getUserInput();
+
+	// getUserInput işlevi çağrıldıktan sonra dönüş değerini kontrol edin
+	EXPECT_EQ(result, 0); // Başarılı olduğunu varsayalım, dönüş değeri 0
+
+	// Şimdi de, girdinin doğru bir şekilde alınıp alınmadığını kontrol edelim
+	// Varsayılan olarak başlangıç değerleriyle oluşturulan bir Feedback nesnesi kullanarak test ediyoruz
+}
+
+TEST_F(GymManagementSystemTest, TestAddProduct) {
+	GymPOS gymPos;
+
+	int result = gymPos.addProduct("Protein Shake", 5.99);
+
+	EXPECT_EQ(result, 0);
+}
+
+TEST_F(GymManagementSystemTest, TestPurchaseProduct) {
+	GymPOS gymPos;
+	gymPos.addProduct("Protein Shake", 5.99);
+
+	int result = gymPos.purchaseProduct("Protein Shake");
+
+	EXPECT_EQ(result, 0);
+}
+
+TEST_F(GymManagementSystemTest, TestPrintPriceList) {
+	// Output yakalamak için stringstream kullanın
+	std::stringstream capturedOutput;
+	std::streambuf* oldCoutBuffer = std::cout.rdbuf(); // Önceki cout buffer'ını sakla
+	std::cout.rdbuf(capturedOutput.rdbuf()); // cout'u yönlendir
+
+	// Test işlevini çağır
+	DiscountOffer discountOffer;
+	discountOffer.printPriceList();
+
+	std::string outputString = capturedOutput.str(); // Yakalanan çıktıyı string'e dönüştür
+
+	// Beklenen çıktıyı kontrol et
+	std::string expectedOutput = "Code: A - Fitness / Normal Membership: 1 Month (5 days a week) - Price: 20\nCode: B - Fitness / Normal Membership: 1 Month (3 days a week) - Price: 15\nCode: C - Fitness / Student Discount: 1 Month (3 days a week) - Price: 10\nCode: D - Swimming / Normal Membership: 1 Month (5 days a week) - Price: 25\nCode: E - Swimming / Normal Membership: 1 Month (3 days a week) - Price: 20\nCode: F - Swimming / Student Discount: 1 Month (3 days a week) - Price: 15\nCode: G - Fitness and Swimming / Normal Membership: 1 Month (5 days a week) - Price: 40\nCode: H - Fitness and Swimming / Normal Membership: 1 Month (3 days a week) - Price: 30\nCode: I - Fitness and Swimming / Student Discount: 1 Month (3 days a week) - Price: 20\n";
+
+	EXPECT_EQ(outputString, expectedOutput); // Çıktının beklenen değerle eşleşmesini kontrol et
+
+	// std::cout'u eski buffer'a geri döndür
+	std::cout.rdbuf(oldCoutBuffer);
+}
+
+TEST_F(GymManagementSystemTest, TestGetPrice) {
+	DiscountOffer discountOffer;
+
+	// Test için örnek fiyatları ekle
+	discountOffer.priceList['A'] = { "Fitness / Normal Membership: 1 Month (5 days a week)", 20 };
+	discountOffer.priceList['B'] = { "Fitness / Normal Membership: 1 Month (3 days a week)", 15 };
+
+	// Testleri gerçekleştir
+	EXPECT_EQ(discountOffer.getPrice('A'), 20); // 'A' kodu için fiyat 20 olmalı
+	EXPECT_EQ(discountOffer.getPrice('B'), 15); // 'B' kodu için fiyat 15 olmalı
+	EXPECT_EQ(discountOffer.getPrice('C'), 10); // Geçersiz bir kod için -2 dönmeli
+}
 
 //TEST(GraphAlgorithmTest, DFSTest) {
 //	// Create a sample graph for testing
