@@ -648,7 +648,7 @@ private:
     std::unordered_map<std::string, std::string> maintenanceSchedule;
     std::unordered_map<std::string, std::string> maintenanceRecords;
 };
-class ClassScheduling {
+struct ClassScheduling {
 public:
     // Öğrenci yapıları
     struct Student {
@@ -792,15 +792,16 @@ public:
 };
 
 
-class ParticipationTracking {
+struct ParticipationTracking {
 public:
     std::unordered_map<std::string, std::vector<std::string>> participantPrograms;
 
-    void addParticipation(const std::string& participant, const std::string& program) {
+    int addParticipation(const std::string& participant, const std::string& program) {
         participantPrograms[participant].push_back(program);
+        return 0;  // Success status (you might want to handle errors differently)
     }
 
-    void listParticipations(const std::string& participant) {
+    int listParticipations(const std::string& participant) {
         system("cls");
         if (participantPrograms.find(participant) != participantPrograms.end()) {
             std::cout << participant << " participated in: ";
@@ -808,17 +809,15 @@ public:
                 std::cout << program << " ";
             }
             std::cout << std::endl;
-
         }
         else {
             std::cout << participant << " didn't participate in any program." << std::endl;
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-       
-        
+        return 0;  // Success status
     }
 
-    void readMembersFromFile(const std::string& filename) {
+    int readMembersFromFile(const std::string& filename) {
         std::ifstream file(filename);
         if (file.is_open()) {
             std::string line;
@@ -832,42 +831,54 @@ public:
                 }
             }
             file.close();
+            return 0;  // Success status
+        }
+        else {
+            return 1;  // Failure status (could not open file)
         }
     }
 };
-class InstructorAssignments {
+
+
+
+struct InstructorAssignments {
 public:
     std::unordered_map<std::string, std::vector<std::string>> instructorToCourses;
 
-    void assignCourseToInstructor(const std::string& instructor, const std::string& course) {
+    int assignCourseToInstructor(const std::string& instructor, const std::string& course) {
         instructorToCourses[instructor].push_back(course);
+        return 0;  // Success status (you might want to handle errors differently)
     }
 
-    void listCoursesForInstructor(const std::string& instructor) {
+    int listCoursesForInstructor(const std::string& instructor) {
         if (instructorToCourses.find(instructor) != instructorToCourses.end()) {
             std::cout << "Courses assigned to " << instructor << ": ";
             for (const std::string& course : instructorToCourses[instructor]) {
                 std::cout << course << " ";
             }
             std::cout << std::endl;
+            return 0;  // Success status
         }
         else {
             std::cout << instructor << " is not assigned to any course." << std::endl;
+            return 1;  // Failure status (instructor not found)
         }
     }
 };
-class Purchase {
+
+struct Purchase {
 public:
     Purchase() {
         loadPriceList();
     }
 
-    void displayPurchaseOptions() {
+    int displayPurchaseOptions() {
         std::cout << "\n\n\t\tPAYMENT METHODS AND DISCOUNTS\n\n";
         for (const auto& entry : priceList) {
             std::cout << "\n\t" << entry.first << "- " << entry.second.first << " : " << entry.second.second << "$";
         }
         std::cout << std::endl;
+        return 0; // Assuming 0 indicates success
     }
 
     bool buyItem(char option) {
@@ -886,35 +897,39 @@ public:
     }
 
 private:
-
     std::unordered_map<char, std::pair<std::string, int>> priceList;
     std::vector<std::string> usageLog;
 
-    void loadPriceList() {
+    int loadPriceList() {
         priceList['A'] = { "Supplement / Whey Protein 30gr", 2 };
         priceList['B'] = { "Supplement / Isolate Protein 30gr)", 2 };
         priceList['C'] = { "Supplement / Creatine Monohydrate 5mg)", 1 };
-        priceList['D'] = { "Supplement / Pre-Workout 10gr (200mg cafein)", 2 };
-        priceList['E'] = { "Supplement / Cafein 1pill-200mg", 1 };
+        priceList['D'] = { "Supplement / Pre-Workout 10gr (200mg caffeine)", 2 };
+        priceList['E'] = { "Supplement / Caffeine 1pill-200mg", 1 };
         priceList['F'] = { "Supplement / Glutamine 25gr", 2 };
         priceList['G'] = { "Supplement / BCAA 20gr ", 2 };
         priceList['H'] = { "Supplement / Arginine 12.5 gr", 1 };
-        priceList['I'] = { "Vitamines / Multivitamines ", 5 };
+        priceList['I'] = { "Vitamins / Multivitamins ", 5 };
+        return 0; // Assuming 0 indicates success
     }
 };
-class MembershipFeeTracking{
+
+struct MembershipFeeTracking {
 public:
     MembershipFeeTracking() {
         loadMembershipFeeTrackingList(); // Fiyat listesini yükle
     }
 
-    void displayMembershipFeeList() {
+    int displayMembershipFeeList() {
         std::cout << "\nMembership Fee List:\n";
         for (const auto& entry : priceList) {
             std::cout << entry.first << ". " << entry.second.first << " : " << entry.second.second << "$" << std::endl;
         }
+
+        return 0; // Assuming 0 indicates success
     }
-    void getAndSaveUserInfo() {
+
+    int getAndSaveUserInfo() {
         std::ifstream inFile("members.txt"); // Dosyayı okuma modunda aç
         if (inFile.is_open()) {
             std::string line;
@@ -923,46 +938,50 @@ public:
                 std::cout << line << std::endl;
             }
             inFile.close();
+            return 0; // Assuming 0 indicates success
         }
         else {
             std::cerr << "Unable to open the file!" << std::endl;
+            return 1; // Assuming 1 indicates failure
         }
     }
 
-
-void setMembershipType(char option) {
-    if (priceList.find(option) != priceList.end()) {
-        std::cout << "You've selected: " << priceList[option].first << " for " << priceList[option].second << "$." << std::endl;
-        std::this_thread::sleep_for(std::chrono::milliseconds(2000));
-        system("cls");
-        // Üyelik türünü kullanıcının seçtiği türe ayarla veya kaydet
+    int setMembershipType(char option) {
+        if (priceList.find(option) != priceList.end()) {
+            std::cout << "You've selected: " << priceList[option].first << " for " << priceList[option].second << "$." << std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            system("cls");
+            // Üyelik türünü kullanıcının seçtiği türe ayarla veya kaydet
+            return 0; // Assuming 0 indicates success
+        }
+        else {
+            std::cout << "Invalid option! Please select a valid item." << std::endl;
+            std::this_thread::sleep_for(std::chrono::milliseconds(2000));
+            system("cls");
+            return 1; // Assuming 1 indicates failure
+        }
     }
-else {
- std::cout << "Invalid option! Please select a valid item." << std::endl;
- std::this_thread::sleep_for(std::chrono::milliseconds(2000));
- system("cls");
-}
-}
-
-void createHeap() {
+    int createHeap() {
         for (const auto& entry : priceList) {
             heap.push_back(entry.second);
         }
         std::make_heap(heap.begin(), heap.end(), compareByPrice);
+        return 0; // Assuming 0 indicates success
     }
 
-    void displayHeap() {
+    int displayHeap() {
         std::cout << "\nHeap Structure:\n";
         for (const auto& entry : heap) {
             std::cout << entry.first << " : " << entry.second << "$" << std::endl;
         }
+        return 0; // Assuming 0 indicates success
     }
 
 private:
     std::unordered_map<char, std::pair<std::string, int>> priceList;
     std::vector<std::pair<std::string, int>> heap;
 
-    void loadMembershipFeeTrackingList() {
+    int loadMembershipFeeTrackingList() {
         priceList['A'] = { "Fitness / Normal Membership : 1 Month (5 days a week)", 20 };
         priceList['B'] = { "Fitness / Normal Membership : 1 Month (3 days a week)", 15 };
         priceList['C'] = { "Fitness / Student Discount : 1 Month (3 days a week)", 10 };
@@ -972,12 +991,19 @@ private:
         priceList['G'] = { "Fitness and Swimming / Normal Membership : 1 Month (5 days a week)", 40 };
         priceList['H'] = { "Fitness and Swimming / Normal Membership : 1 Month (3 days a week)", 30 };
         priceList['I'] = { "Fitness and Swimming / Student Discount : 1 Month (3 days a week)", 20 };
+
+        return 0;
     }
 
     static bool compareByPrice(const std::pair<std::string, int>& a, const std::pair<std::string, int>& b) {
         return a.second < b.second;
     }
 };
+
+
+
+
+
 
 
 struct DiscountOffer {
@@ -1012,14 +1038,15 @@ public:
 }; 
 //damam
 
-class OtherClass {
+struct OtherClass {
 public:
-    void displayPriceList() {
+    int displayPriceList() {
         DiscountOffer discountOffer;
         discountOffer.printPriceList();
+        return 0; // Assuming 0 indicates success
     }
 };
-//damam değil
+
 
 struct GymPOS {
 public:

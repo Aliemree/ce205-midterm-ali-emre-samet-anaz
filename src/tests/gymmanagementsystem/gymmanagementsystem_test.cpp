@@ -18,6 +18,18 @@ protected:
 	
 };
 
+class EquipmentUsageLoggerTest : public ::testing::Test {
+protected:
+	void SetUp() override {
+		// Setup test data
+	}
+
+	void TearDown() override {
+		// Clean up test data
+	}
+
+};
+
 TEST_F(GymManagementSystemTest, authenticateUser) {
 	// Assuming you have a class or function providing the authentication logic
 	// You may need to replace YourAuthenticationClass with the actual class or function name
@@ -499,6 +511,157 @@ TEST_F(GymManagementSystemTest, TestGetPrice) {
 	EXPECT_EQ(discountOffer.getPrice('C'), 10); // Geçersiz bir kod için -2 dönmeli
 }
 
+
+TEST_F(GymManagementSystemTest, TestDisplayUsageLogs) {
+	EquipmentUsageLogger logger;
+
+	// Call the logUsage function to add a log entry
+	logger.logUsage("Stationary Bike", "Jane Doe", "Leg Workout");
+
+	// Redirect cout to capture the output
+	testing::internal::CaptureStdout();
+
+	// Call the displayUsageLogs function
+	try {
+		logger.displayUsageLogs();
+	}
+	catch (const std::exception& e) {
+		// Print the exception information for debugging
+		std::cerr << "Caught exception: " << e.what() << std::endl;
+		FAIL();  // Fail the test if an exception is caught
+	}
+	catch (...) {
+		// Print a generic message for unknown exceptions
+		std::cerr << "Caught an unknown exception." << std::endl;
+		FAIL();  // Fail the test for unknown exceptions
+	}
+
+	// Get the captured output
+	std::string output = testing::internal::GetCapturedStdout();
+
+	// Assuming that the log entry added in the previous step is displayed
+	EXPECT_TRUE(output.find("Equipment: Stationary Bike used by Jane Doe for Leg Workout") != std::string::npos);
+}
+
+TEST_F(GymManagementSystemTest, TestAddParticipation) {
+	// Assuming you have a class or function providing the gym management system logic
+	// You may need to replace ParticipationTracking with the actual class or function name
+	ParticipationTracking gymSystem;
+
+	// Call the addParticipation function
+	int result = gymSystem.addParticipation("John", "Running");
+
+	// Check if the result is equal to the expected value
+	EXPECT_EQ(result, 0); // Assuming 0 indicates success for addParticipation
+
+	// Verify that the participation was added
+	EXPECT_EQ(gymSystem.participantPrograms["John"].size(), 1);
+	EXPECT_EQ(gymSystem.participantPrograms["John"][0], "Running");
+}
+
+TEST_F(GymManagementSystemTest, TestListCoursesForInstructor) {
+	// Assuming you have a class or function providing the gym management system logic
+	// You may need to replace InstructorAssignments with the actual class or function name
+	InstructorAssignments instructorAssignments;
+
+	// Assign a course to an instructor for testing
+	instructorAssignments.assignCourseToInstructor("Jane", "Yoga");
+
+	// Redirect cout to capture the output
+	testing::internal::CaptureStdout();
+
+	// Call the listCoursesForInstructor function
+	int result = instructorAssignments.listCoursesForInstructor("Jane");
+
+	// Get the captured output
+	std::string output = testing::internal::GetCapturedStdout();
+
+	// Check if the expected output is in the captured output
+	EXPECT_TRUE(output.find("Courses assigned to Jane: Yoga") != std::string::npos);
+
+	// Reset cout
+	testing::internal::GetCapturedStdout();
+
+	// Check if the result indicates success
+	EXPECT_EQ(result, 0);
+}
+
+
+
+TEST_F(GymManagementSystemTest, TestBuyItem) {
+	// Assuming you have a class or function providing the gym management system logic
+	// You may need to replace Purchase with the actual class or function name
+	Purchase purchase;
+
+	// Redirect cout to capture the output
+	testing::internal::CaptureStdout();
+
+	// Call the buyItem function with a valid option
+	char validOption = 'A';
+	bool buyResultValid = purchase.buyItem(validOption);
+
+	// Check if the result indicates success
+	EXPECT_TRUE(buyResultValid);
+
+	// Call the buyItem function with an invalid option
+	char invalidOption = 'Z';
+	bool buyResultInvalid = purchase.buyItem(invalidOption);
+
+	// Check if the result indicates failure
+	EXPECT_FALSE(buyResultInvalid);
+
+	// Reset cout
+	testing::internal::GetCapturedStdout();
+}
+TEST_F(GymManagementSystemTest, TestDisplayMembershipFeeList) {
+	// Assuming you have a class or function providing the gym management system logic
+	// You may need to replace MembershipFeeTracking with the actual class or function name
+	MembershipFeeTracking membershipFeeTracking;
+
+	// Redirect cout to capture the output
+	testing::internal::CaptureStdout();
+
+	// Call the displayMembershipFeeList function
+	int displayResult = membershipFeeTracking.displayMembershipFeeList();
+
+	// Get the captured output
+	std::string displayOutput = testing::internal::GetCapturedStdout();
+
+	// Check if the expected output is in the captured output
+	EXPECT_TRUE(displayOutput.find("Membership Fee List:") != std::string::npos);
+
+	// Reset cout
+	testing::internal::GetCapturedStdout();
+
+	// Check if the result indicates success
+	EXPECT_EQ(displayResult, 0);
+}
+TEST_F(GymManagementSystemTest, TestGetAndSaveUserInfo) {
+	// Assuming you have a class or function providing the gym management system logic
+	// You may need to replace MembershipFeeTracking with the actual class or function name
+	MembershipFeeTracking membershipFeeTracking;
+
+	// Create a dummy "members.txt" file for testing purposes
+
+	// Redirect cout to capture the output
+	testing::internal::CaptureStdout();
+
+	// Call the getAndSaveUserInfo function
+	int getResult = membershipFeeTracking.getAndSaveUserInfo();
+
+	// Get the captured output
+	std::string getOutput = testing::internal::GetCapturedStdout();
+
+	// Check if the expected output is in the captured output
+	EXPECT_TRUE(getOutput.find("Existing Members:") != std::string::npos);
+
+	// Reset cout
+	testing::internal::GetCapturedStdout();
+
+	// Check if the result indicates success
+	EXPECT_EQ(getResult, 0);
+}
+
 //TEST(GraphAlgorithmTest, DFSTest) {
 //	// Create a sample graph for testing
 //	std::vector<std::vector<int>> adjList = {
@@ -547,6 +710,27 @@ TEST_F(GymManagementSystemTest, TestGetPrice) {
 //	EXPECT_EQ(result, -1);  // Assuming 0 indicates success, adjust based on your implementation
 //}
 
+//
+//TEST_F(GymManagementSystemTest, TestDisplayPriceList) {
+//	// Assuming you have a class or function providing the gym management system logic
+//	// You may need to replace OtherClass with the actual class or function name
+//	OtherClass otherClass;
+//
+//	// Redirect cout to capture the output
+//	testing::internal::CaptureStdout();
+//
+//	// Call the displayPriceList function
+//	otherClass.displayPriceList();
+//
+//	// Get the captured output
+//	std::string output = testing::internal::GetCapturedStdout();
+//
+//	// Check if the expected output is in the captured output
+//	EXPECT_FALSE(output.find("Price List:") != std::string::npos);
+//
+//	// Reset cout
+//	testing::internal::GetCapturedStdout();
+//}
 
 
 
@@ -565,9 +749,4 @@ int main(int argc, char** argv) {
 #ifdef ENABLE_GYMMANAGEMENTSYSTEM_TEST
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
-#else
-	return 0;
 #endif
-
-
-}

@@ -62,7 +62,16 @@ namespace Coruh
             int purchaseProduct();
             int printPriceList();
             int getPrice();
+            int addParticipation();
+           
 
+            int assignCourseToInstructor();
+            int listCoursesForInstructor();
+            int loadPriceList();
+            int displayPurchaseOptions();
+            int displayPriceList();
+            int getAndSaveUserInfo();
+            int displayMembershipFeeList();
           
         };
     }
