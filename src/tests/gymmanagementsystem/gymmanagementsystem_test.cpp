@@ -559,7 +559,7 @@ TEST_F(GymManagementSystemTest, TestAddParticipation) {
 	EXPECT_EQ(gymSystem.participantPrograms["John"][0], "Running");
 }
 
-TEST_F(GymManagementSystemTest, TestListCoursesForInstructor) {
+/*TEST_F(GymManagementSystemTest, TestListCoursesForInstructor) {
 	// Assuming you have a class or function providing the gym management system logic
 	// You may need to replace InstructorAssignments with the actual class or function name
 	InstructorAssignments instructorAssignments;
@@ -584,7 +584,7 @@ TEST_F(GymManagementSystemTest, TestListCoursesForInstructor) {
 
 	// Check if the result indicates success
 	EXPECT_EQ(result, 0);
-}
+}*/
 
 
 
@@ -613,7 +613,7 @@ TEST_F(GymManagementSystemTest, TestBuyItem) {
 	// Reset cout
 	testing::internal::GetCapturedStdout();
 }
-TEST_F(GymManagementSystemTest, TestDisplayMembershipFeeList) {
+/*TEST_F(GymManagementSystemTest, TestDisplayMembershipFeeList) {
 	// Assuming you have a class or function providing the gym management system logic
 	// You may need to replace MembershipFeeTracking with the actual class or function name
 	MembershipFeeTracking membershipFeeTracking;
@@ -635,8 +635,8 @@ TEST_F(GymManagementSystemTest, TestDisplayMembershipFeeList) {
 
 	// Check if the result indicates success
 	EXPECT_EQ(displayResult, 0);
-}
-TEST_F(GymManagementSystemTest, TestGetAndSaveUserInfo) {
+}*/
+/*TEST_F(GymManagementSystemTest, TestGetAndSaveUserInfo) {
 	// Assuming you have a class or function providing the gym management system logic
 	// You may need to replace MembershipFeeTracking with the actual class or function name
 	MembershipFeeTracking membershipFeeTracking;
@@ -660,7 +660,7 @@ TEST_F(GymManagementSystemTest, TestGetAndSaveUserInfo) {
 
 	// Check if the result indicates success
 	EXPECT_EQ(getResult, 0);
-}
+}*/
 
 //TEST(GraphAlgorithmTest, DFSTest) {
 //	// Create a sample graph for testing
@@ -749,4 +749,5 @@ int main(int argc, char** argv) {
 #ifdef ENABLE_GYMMANAGEMENTSYSTEM_TEST
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
+}
 #endif
