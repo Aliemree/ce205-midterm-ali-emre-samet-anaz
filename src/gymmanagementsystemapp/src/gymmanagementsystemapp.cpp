@@ -11,18 +11,18 @@
 
 
 
+int PrintCentered(const std::string& text) {
+    // Get the screen width
+    int screenWidth = 125;  // Example width, you can adjust it
 
-void PrintCentered(const std::string& text) {
-    // Ekrandaki karakter genişliğini al
-    int screenWidth = 125;  // Örnek olarak 80 karakter genişliği
-
-    // Metni ortalamak için kullanılacak boşluk sayısını hesapla
+    // Calculate the number of spaces to be used for centering the text
     int padding = (screenWidth - text.length()) / 2;
 
-    // Boşlukları metnin etrafına yerleştirerek metni ortala ve yazdır
+    // Place spaces around the text to center it and print
     std::cout << std::string(padding, ' ') << text << std::string(padding, ' ') << std::endl;
-}
 
+    return 0;  // Assuming 0 indicates success
+}
 
 int main() {
     LoginScreen loginScreen;
@@ -41,12 +41,6 @@ int main() {
     char code;
     OtherClass other;
     Feedback feedback;
-
-
-
-
-
-    /*SchedulingManager schedulingManager;*/
     GymManager gym;
     std::vector<std::vector<int>> sparseMatrix;
     std::stack<int> stackData;
